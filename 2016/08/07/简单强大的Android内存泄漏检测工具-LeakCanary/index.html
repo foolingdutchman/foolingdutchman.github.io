@@ -84,24 +84,18 @@
 
 
 
-<meta name="description" content="几乎每个程序员在开发的过程中都会遇到内存泄漏，那么我们如何检测到app是否哪里出现内存泄漏呢？square公司推出了一款简单粗暴的检测内存泄漏的工具－－ LeakCanary
-什么是内存泄漏？ 内存泄漏是指由于疏忽或者错误造成程序未能释放已经不再使用的内存，内存泄漏不是指内存在物理上的消失，而是应用程序分配某段内存后，由于设计错误失去了对于这段内存的控制，因而造成内存的浪费。
-内存泄漏和内存溢出是">
+<meta name="description" content="几乎每个程序员在开发的过程中都会遇到内存泄漏，那么我们如何检测到app是否哪里出现内存泄漏呢？square公司推出了一款简单粗暴的检测内存泄漏的工具－－ LeakCanary">
 <meta property="og:type" content="article">
 <meta property="og:title" content="简单强大的Android内存泄漏检测工具 LeakCanary">
 <meta property="og:url" content="http://yoursite.com/2016/08/07/简单强大的Android内存泄漏检测工具-LeakCanary/index.html">
 <meta property="og:site_name" content="fooling dutchman的博客">
-<meta property="og:description" content="几乎每个程序员在开发的过程中都会遇到内存泄漏，那么我们如何检测到app是否哪里出现内存泄漏呢？square公司推出了一款简单粗暴的检测内存泄漏的工具－－ LeakCanary
-什么是内存泄漏？ 内存泄漏是指由于疏忽或者错误造成程序未能释放已经不再使用的内存，内存泄漏不是指内存在物理上的消失，而是应用程序分配某段内存后，由于设计错误失去了对于这段内存的控制，因而造成内存的浪费。
-内存泄漏和内存溢出是">
+<meta property="og:description" content="几乎每个程序员在开发的过程中都会遇到内存泄漏，那么我们如何检测到app是否哪里出现内存泄漏呢？square公司推出了一款简单粗暴的检测内存泄漏的工具－－ LeakCanary">
 <meta property="og:image" content="http://static.open-open.com/lib/uploadImg/20151221/20151221115113_804.png">
 <meta property="og:image" content="http://static.open-open.com/lib/uploadImg/20151221/20151221115136_192.png">
-<meta property="og:updated_time" content="2016-08-07T09:39:00.000Z">
+<meta property="og:updated_time" content="2016-08-07T11:20:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="简单强大的Android内存泄漏检测工具 LeakCanary">
-<meta name="twitter:description" content="几乎每个程序员在开发的过程中都会遇到内存泄漏，那么我们如何检测到app是否哪里出现内存泄漏呢？square公司推出了一款简单粗暴的检测内存泄漏的工具－－ LeakCanary
-什么是内存泄漏？ 内存泄漏是指由于疏忽或者错误造成程序未能释放已经不再使用的内存，内存泄漏不是指内存在物理上的消失，而是应用程序分配某段内存后，由于设计错误失去了对于这段内存的控制，因而造成内存的浪费。
-内存泄漏和内存溢出是">
+<meta name="twitter:description" content="几乎每个程序员在开发的过程中都会遇到内存泄漏，那么我们如何检测到app是否哪里出现内存泄漏呢？square公司推出了一款简单粗暴的检测内存泄漏的工具－－ LeakCanary">
 <meta name="twitter:image" content="http://static.open-open.com/lib/uploadImg/20151221/20151221115113_804.png">
 
 
@@ -295,8 +289,7 @@
       
 
       
-        <p>几乎每个程序员在开发的过程中都会遇到内存泄漏，那么我们如何检测到app是否哪里出现内存泄漏呢？square公司推出了一款简单粗暴的检测内存泄漏的工具－－ LeakCanary</p>
-<p><strong>什么是内存泄漏？</strong><br> 内存泄漏是指由于疏忽或者错误造成程序未能释放已经不再使用的内存，内存泄漏不是指内存在物理上的消失，而是应用程序分配某段内存后，由于设计错误失去了对于这段内存的控制，因而造成内存的浪费。</p>
+        <p>几乎每个程序员在开发的过程中都会遇到内存泄漏，那么我们如何检测到app是否哪里出现内存泄漏呢？square公司推出了一款简单粗暴的检测内存泄漏的工具－－ LeakCanary<br><a id="more"></a><br><strong>什么是内存泄漏？</strong><br> 内存泄漏是指由于疏忽或者错误造成程序未能释放已经不再使用的内存，内存泄漏不是指内存在物理上的消失，而是应用程序分配某段内存后，由于设计错误失去了对于这段内存的控制，因而造成内存的浪费。</p>
 <p>内存泄漏和内存溢出是两码事，不要混淆，内存溢出通俗的讲就是内存不够用,现在的只能手机内存越来越大,内存溢出的情况不是很多,但是内存泄露情况比较严重,LeakCanary的到来对我们来说是一个简单粗暴,直观的好工具<br><img src="http://static.open-open.com/lib/uploadImg/20151221/20151221115113_804.png" alt="enter image description here"></p>
 <p>上面这个图片就是这个工具的图标了,当你的程序处于debug模式的时候,就能看到他了,当然release没有</p>
 <p>LeakCanary作为一个简单粗暴的工具,用法也相当简单</p>

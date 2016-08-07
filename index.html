@@ -291,244 +291,13 @@
 
       
         
-          
-            <p><a href="http://blog.csdn.net/lmj623565791/article/details/45460089；" target="_blank" rel="external">http://blog.csdn.net/lmj623565791/article/details/45460089；</a><br>本文出自:【张鸿洋的博客】<br>1、概述</p>
+          <p><a href="http://blog.csdn.net/lmj623565791/article/details/45460089；">http://blog.csdn.net/lmj623565791/article/details/45460089；</a><br>本文出自:【张鸿洋的博客】<br>1、概述</p>
 <p>大家在Android开发时，肯定会觉得屏幕适配是个尤其痛苦的事，各种屏幕尺寸适配起来蛋疼无比。如果我们换个角度我们看下这个问题，不知道大家有没有了解过web前端开发，或者说大家对于网页都不陌生吧，其实适配的问题在web页面的设计中理论上也存在，为什么这么说呢？电脑的显示器的分辨率、包括手机分辨率，我敢说分辨率的种类远超过Android设备的分辨率，那么有一个很奇怪的现象：</p>
-<p>为什么Web页面设计人员从来没有说过，尼玛适配好麻烦？<br>那么，到底是什么原因，让网页的设计可以在千差万别的分辨率的分辨率中依旧能给用户一个优质的体验呢？带着这个疑惑，我问了下媳妇（前端人员），媳妇睁大眼睛问我：什么叫适配？fc，尼玛，看来的确没有这类问题。后来再我仔细的追问后，她告诉我，噢，这个尺寸呀，我都是设置为20%的~~追根到底，其实就是一个原因，网页提供了百分比计算大小。</p>
-<p>同样的，大家拿到UI给的设计图以后，是不是抱怨过尼玛你标识的都是px，我项目里面用dp，这什么玩意，和UI人员解释，UI妹妹也不理解。那么本例同样可以解决Android工程师和UI妹妹间的矛盾~UI给出一个固定尺寸的设计稿，然后你在编写布局的时候不用思考，无脑照抄上面标识的像素值，就能达到完美适配，理想丰不丰满~~。</p>
-<p>然而，Android对于不同的屏幕给出的适配方案是dp，那么dp与百分比的差距到底在哪里？</p>
-<p>2、dp vs 百分比</p>
-<p>dp<br>我们首先看下dp的定义：</p>
-<p>Density-independent pixel (dp)独立像素密度。标准是160dip.即1dp对应1个pixel，计算公式如：px = dp * (dpi / 160)，屏幕密度越大，1dp对应 的像素点越多。<br>上面的公式中有个dpi，dpi为DPI是Dots Per Inch（每英寸所打印的点数），也就是当设备的dpi为160的时候1px=1dp；<br>好了，上述这些概念记不记得住没关系，只要记住一点dp是与像素无关的，在实际使用中1dp大约等于1/160inch。</p>
-<p>那么dp究竟解决了适配上的什么问题？可以看出1dp = 1/160inch；那么它至少能解决一个问题，就是你在布局文件写某个View的宽和高为160dp<em>160dp，这个View在任何分辨率的屏幕中，显示的尺寸大小是大约是一致的（可能不精确），大概是 1 inch </em> 1 inch。</p>
-<p>但是，这样并不能够解决所有的适配问题：</p>
-<p>呈现效果仍旧会有差异，仅仅是相近而已<br>当设备的物理尺寸存在差异的时候，dp就显得无能为力了。为4.3寸屏幕准备的UI，运行在5.0寸的屏幕上，很可能在右侧和下侧存在大量的空白。而5.0寸的UI运行到4.3寸的设备上，很可能显示不下。<br>以上两点，来自参考链接1<br>一句话，总结下，dp能够让同一数值在不同的分辨率展示出大致相同的尺寸大小。但是当设备的尺寸差异较大的时候，就无能为力了。适配的问题还需要我们自己去做，于是我们可能会这么做：</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;  
-&lt;resources&gt;  
-&lt;!-- values-hdpi 480X800 --&gt;  
-&lt;dimen name=&quot;imagewidth&quot;&gt;120dip&lt;/dimen&gt;      
-&lt;/resources&gt;  
-
-&lt;resources&gt;  
-&lt;!-- values-hdpi-1280x800 --&gt;  
-&lt;dimen name=&quot;imagewidth&quot;&gt;220dip&lt;/dimen&gt;      
-&lt;/resources&gt;  
- &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;  
- &lt;resources&gt;  
-&lt;!-- values-hdpi  480X320 --&gt;  
-&lt;dimen name=&quot;imagewidth&quot;&gt;80dip&lt;/dimen&gt;      
-&lt;/resources&gt; 
-</code></pre><p>上述代码片段来自网络，也就是说，我们为了优质的用户体验，依然需要去针对不同的dpi设置，编写多套数值文件。<br>可以看出，dp并没有能解决适配问题。下面看百分比。</p>
-<p>百分比<br>这个概念不用说了，web中支持控件的宽度可以去参考父控件的宽度去设置百分比，最外层控件的宽度参考屏幕尺寸设置百分比，那么其实中Android设备中，只需要支持控件能够参考屏幕的百分比去计算宽高就足够了。<br>比如，我现在以下几个需求：</p>
-<p>对于图片展示的Banner，为了起到该有的效果，我希望在任何手机上显示的高度为屏幕高度的1/4<br>我的首页分上下两栏，我希望每个栏目的屏幕高度为11/24，中间间隔为1/12<br>slidingmenu的宽度为屏幕宽度的80%<br>当然了这仅仅是从一个大的层面上来说，其实小范围布局，可能百分比将会更加有用。</p>
-<p>那么现在不支持百分比，实现上述的需求，可能需要1、代码去动态计算（很多人直接pass了，太麻烦）;2、利用weight（weight必须依赖Linearlayout，而且并不能适用于任何场景）</p>
-<p>再比如：我的某个浮动按钮的高度和宽度希望是屏幕高度的1/12，我的某个Button的宽度希望是屏幕宽度的1/3。</p>
-<p>上述的所有的需求，利用dp是无法完成的，我们希望控件的尺寸可以按照下列方式编写：</p>
-<pre><code>&lt;Button
- android:text=&quot;@string/hello_world&quot;
- android:layout_width=&quot;20%w&quot;
- android:layout_height=&quot;10%h&quot;/&gt;
-</code></pre><p>利用屏幕的宽和高的比例去定义View的宽和高。</p>
-<p>好了，到此我们可以看到dp与百分比的区别，而百分比能够更好的解决我们的适配问题。</p>
-<p>some 适配tips<br>我们再来看看一些适配的tips</p>
-<p>多用match_parent<br>多用weight<br>自定义view解决<br>其实上述3点tip，归根结底还是利用百分比，match_parent相当于100%参考父控件；weight即按比例分配；自定义view无非是因为里面多数尺寸是按照百分比计算的；</p>
-<p>通过这些tips，我们更加的看出如果能在Android中引入百分比的机制，将能解决大多数的适配问题，下面我们就来看看如何能够让Android支持百分比的概念。</p>
-<p>3、百分比的引入</p>
-<p>1、引入</p>
-<p>其实我们的解决方案，就是在项目中针对你所需要适配的手机屏幕的分辨率各自简历一个文件夹。</p>
-<p>如下图：</p>
-<p>然后我们根据一个基准，为基准的意思就是：</p>
-<p>比如480<em>320的分辨率为基准<br>宽度为320，将任何分辨率的宽度分为320份，取值为x1-x320<br>高度为480，将任何分辨率的高度分为480份，取值为y1-y480<br>例如对于800</em>480的宽度480：</p>
-<p>可以看到x1 = 480 / 基准 = 480 / 320 = 1.5 ;</p>
-<p>其他分辨率类似~~<br>你可能会问，这么多文件，难道我们要手算，然后自己编写？不要怕，下文会说。</p>
-<p>那么，你可能有个疑问，这么写有什么好处呢？</p>
-<p>假设我现在需要在屏幕中心有个按钮，宽度和高度为我们屏幕宽度的1/2，我可以怎么编写布局文件呢？</p>
-<framelayout><br><br>    <button android:layout_gravity="center" android:gravity="center" android:text="@string/hello_world" android:layout_width="@dimen/x160" android:layout_height="@dimen/x160"><br><br></button></framelayout>
-
-<p>可以看到我们的宽度和高度定义为x160，其实就是宽度的50%；<br>那么效果图：</p>
-<p>可以看到不论在什么分辨率的机型，我们的按钮的宽和高始终是屏幕宽度的一半。</p>
-<p>对于设计图<br>假设现在的UI的设计图是按照480*320设计的，且上面的宽和高的标识都是px的值，你可以直接将px转化为x[1-320]，y[1-480]，这样写出的布局基本就可以全分辨率适配了。</p>
-<p>你可能会问：设计师设计图的分辨率不固定怎么办？下文会说~</p>
-<p>对于上文提出的几个dp做不到的<br>你可以通过在引入百分比后，自己试试~~</p>
-<p>好了，有个最主要的问题，我们没有说，就是分辨率这么多，尼玛难道我们要自己计算，然后手写？</p>
-<p>2、自动生成工具</p>
-<p>好了，其实这样的文件夹手写也可以，按照你们需要支持的分辨率，然后编写一套，以后一直使用。</p>
-<p>当然了，作为程序员的我们，怎么能做这么low的工作，肯定要程序来实现：</p>
-<p>那么实现需要以下步骤：</p>
-<p>分析需要的支持的分辨率<br>对于主流的分辨率我已经集成到了我们的程序中，当然对于特殊的，你可以通过参数指定。关于屏幕分辨率信息，可以通过该网站查询：<a href="http://screensiz.es/phone" target="_blank" rel="external">http://screensiz.es/phone</a><br>编写自动生成文件的程序<br>代码如下</p>
-<pre><code>import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
-/**
-    * Created by zhy on 15/5/3.
-    */
-  public class GenerateValueFiles {
-
-private int baseW;
-private int baseH;
-
-private String dirStr = &quot;./res&quot;;
-
-private final static String WTemplate = &quot;&lt;dimen name=\&quot;x{0}\&quot;&gt;{1}px&lt;/dimen&gt;\n&quot;;
-private final static String HTemplate = &quot;&lt;dimen name=\&quot;y{0}\&quot;&gt;{1}px&lt;/dimen&gt;\n&quot;;
-
-/**
- * {0}-HEIGHT
- */
-private final static String VALUE_TEMPLATE = &quot;values-{0}x{1}&quot;;
-
-private static final String SUPPORT_DIMESION = &quot;320,480;480,800;480,854;540,960;600,1024;720,1184;720,1196;720,1280;768,1024;800,1280;1080,1812;1080,1920;1440,2560;&quot;;
-
-private String supportStr = SUPPORT_DIMESION;
-
-public GenerateValueFiles(int baseX, int baseY, String supportStr) {
-    this.baseW = baseX;
-    this.baseH = baseY;
-
-    if (!this.supportStr.contains(baseX + &quot;,&quot; + baseY)) {
-        this.supportStr += baseX + &quot;,&quot; + baseY + &quot;;&quot;;
-    }
-
-    this.supportStr += validateInput(supportStr);
-
-    System.out.println(supportStr);
-
-    File dir = new File(dirStr);
-    if (!dir.exists()) {
-        dir.mkdir();
-
-    }
-    System.out.println(dir.getAbsoluteFile());
-
-}
-
-/**
- * @param supportStr
- *            w,h_...w,h;
- * @return
- */
-private String validateInput(String supportStr) {
-    StringBuffer sb = new StringBuffer();
-    String[] vals = supportStr.split(&quot;_&quot;);
-    int w = -1;
-    int h = -1;
-    String[] wh;
-    for (String val : vals) {
-        try {
-            if (val == null || val.trim().length() == 0)
-                continue;
-
-            wh = val.split(&quot;,&quot;);
-            w = Integer.parseInt(wh[0]);
-            h = Integer.parseInt(wh[1]);
-        } catch (Exception e) {
-            System.out.println(&quot;skip invalidate params : w,h = &quot; + val);
-            continue;
-        }
-        sb.append(w + &quot;,&quot; + h + &quot;;&quot;);
-    }
-
-    return sb.toString();
-}
-
-public void generate() {
-    String[] vals = supportStr.split(&quot;;&quot;);
-    for (String val : vals) {
-        String[] wh = val.split(&quot;,&quot;);
-        generateXmlFile(Integer.parseInt(wh[0]), Integer.parseInt(wh[1]));
-    }
-
-}
-
-private void generateXmlFile(int w, int h) {
-
-    StringBuffer sbForWidth = new StringBuffer();
-    sbForWidth.append(&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;utf-8\&quot;?&gt;\n&quot;);
-    sbForWidth.append(&quot;&lt;resources&gt;&quot;);
-    float cellw = w * 1.0f / baseW;
-
-    System.out.println(&quot;width : &quot; + w + &quot;,&quot; + baseW + &quot;,&quot; + cellw);
-    for (int i = 1; i &lt; baseW; i++) {
-        sbForWidth.append(WTemplate.replace(&quot;{0}&quot;, i + &quot;&quot;).replace(&quot;{1}&quot;,
-                change(cellw * i) + &quot;&quot;));
-    }
-    sbForWidth.append(WTemplate.replace(&quot;{0}&quot;, baseW + &quot;&quot;).replace(&quot;{1}&quot;,
-            w + &quot;&quot;));
-    sbForWidth.append(&quot;&lt;/resources&gt;&quot;);
-
-    StringBuffer sbForHeight = new StringBuffer();
-    sbForHeight.append(&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;utf-8\&quot;?&gt;\n&quot;);
-    sbForHeight.append(&quot;&lt;resources&gt;&quot;);
-    float cellh = h *1.0f/ baseH;
-    System.out.println(&quot;height : &quot;+ h + &quot;,&quot; + baseH + &quot;,&quot; + cellh);
-    for (int i = 1; i &lt; baseH; i++) {
-        sbForHeight.append(HTemplate.replace(&quot;{0}&quot;, i + &quot;&quot;).replace(&quot;{1}&quot;,
-                change(cellh * i) + &quot;&quot;));
-    }
-    sbForHeight.append(HTemplate.replace(&quot;{0}&quot;, baseH + &quot;&quot;).replace(&quot;{1}&quot;,
-            h + &quot;&quot;));
-    sbForHeight.append(&quot;&lt;/resources&gt;&quot;);
-
-    File fileDir = new File(dirStr + File.separator
-            + VALUE_TEMPLATE.replace(&quot;{0}&quot;, h + &quot;&quot;)//
-                    .replace(&quot;{1}&quot;, w + &quot;&quot;));
-    fileDir.mkdir();
-
-    File layxFile = new File(fileDir.getAbsolutePath(), &quot;lay_x.xml&quot;);
-    File layyFile = new File(fileDir.getAbsolutePath(), &quot;lay_y.xml&quot;);
-    try {
-        PrintWriter pw = new PrintWriter(new FileOutputStream(layxFile));
-        pw.print(sbForWidth.toString());
-        pw.close();
-        pw = new PrintWriter(new FileOutputStream(layyFile));
-        pw.print(sbForHeight.toString());
-        pw.close();
-    } catch (FileNotFoundException e) {
-        e.printStackTrace();
-    }
-}
-
-public static float change(float a) {
-    int temp = (int) (a * 100);
-    return temp / 100f;
-}
-
-public static void main(String[] args) {
-    int baseW = 320;
-    int baseH = 400;
-    String addition = &quot;&quot;;
-    try {
-        if (args.length &gt;= 3) {
-            baseW = Integer.parseInt(args[0]);
-            baseH = Integer.parseInt(args[1]);
-            addition = args[2];
-        } else if (args.length &gt;= 2) {
-            baseW = Integer.parseInt(args[0]);
-            baseH = Integer.parseInt(args[1]);
-        } else if (args.length &gt;= 1) {
-            addition = args[0];
-        }
-    } catch (NumberFormatException e) {
-
-        System.err
-                .println(&quot;right input params : java -jar xxx.jar width height w,h_w,h_..._w,h;&quot;);
-        e.printStackTrace();
-        System.exit(-1);
-    }
-
-    new GenerateValueFiles(baseW, baseH, addition).generate();
-  }
-
-}
-</code></pre><p>同时原作者提供了jar包，默认情况下，双击即可生成，使用说明：</p>
-<p>下载地址见文末，内置了常用的分辨率，默认基准为480*320，当然对于特殊需求，通过命令行指定即可：</p>
-<p>例如：基准 1280 <em> 800 ，额外支持尺寸：1152 </em> 735；4500 * 3200；</p>
-<p>按照</p>
-<p>Java -jar xx.jar width height width,height_width,height<br>上述格式即可。</p>
-<p>到此，通过编写一个工具，根据某基准尺寸，生成所有需要适配分辨率的values文件，做到了编写布局文件时，可以参考屏幕的分辨率；在UI给出的设计图，可以快速的按照其标识的px单位进行编写布局。基本解决了适配的问题。</p>
-
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/07/Android屏幕适配方案/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -619,87 +388,15 @@ public static void main(String[] args) {
 
       
         
-          
-            <p>转自：<a href="http://blog.csdn.net/gueter/archive/2007/03/08/1524447.aspx" target="_blank" rel="external">http://blog.csdn.net/gueter/archive/2007/03/08/1524447.aspx</a></p>
+          <p>转自：<a href="http://blog.csdn.net/gueter/archive/2007/03/08/1524447.aspx">http://blog.csdn.net/gueter/archive/2007/03/08/1524447.aspx</a></p>
 <p>Author :Jeffrey</p>
 <p>引言</p>
-<p>HTTP是一个属于应用层的面向对象的协议，由于其简捷、快速的方式，适用于分布式超媒体信息系统。它于1990年提出，经过几年的使用与发展，得到不断地完善和扩展。目前在WWW中使用的是HTTP/1.0的第六版，HTTP/1.1的规范化工作正在进行之中，而且HTTP-NG(Next Generation of HTTP)的建议已经提出。<br>HTTP协议的主要特点可概括如下：<br>1.支持客户/服务器模式。<br>2.简单快速：客户向服务器请求服务时，只需传送请求方法和路径。请求方法常用的有GET、HEAD、POST。每种方法规定了客户与服务器联系的类型不同。由于HTTP协议简单，使得HTTP服务器的程序规模小，因而通信速度很快。<br>3.灵活：HTTP允许传输任意类型的数据对象。正在传输的类型由Content-Type加以标记。<br>4.无连接：无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。<br>5.无状态：HTTP协议是无状态协议。无状态是指协议对于事务处理没有记忆能力。缺少状态意味着如果后续处理需要前面的信息，则它必须重传，这样可能导致每次连接传送的数据量增大。另一方面，在服务器不需要先前信息时它的应答就较快。</p>
-<p>一、HTTP协议详解之URL篇</p>
-<p>  <strong>http（超文本传输协议）是一个基于请求与响应模式的、无状态的、应用层的协议，常基于TCP的连接方式，HTTP1.1版本中给出一种持续连接的机制，绝大多数的Web开发，都是构建在HTTP协议之上的Web应用。</strong></p>
-<p>HTTP URL (URL是一种特殊类型的URI，包含了用于查找某个资源的足够的信息)的格式如下：<br><a href="http://host[&quot;:&quot;port][abs_path" target="_blank" rel="external">http://host[&quot;:&quot;port][abs_path</a>]<br>http表示要通过HTTP协议来定位网络资源；host表示合法的Internet主机域名或者IP地址；port指定一个端口号，为空则使用缺省端口80；abs_path指定请求资源的URI；如果URL中没有给出abs_path，那么当它作为请求URI时，必须以“/”的形式给出，通常这个工作浏览器自动帮我们完成。<br>eg:<br>1、输入：www.guet.edu.cn<br>浏览器自动转换成：<a href="http://www.guet.edu.cn/" target="_blank" rel="external">http://www.guet.edu.cn/</a><br>2、http:192.168.0.116:8080/index.jsp </p>
-<p>二、HTTP协议详解之请求篇</p>
-<pre><code>http请求由三部分组成，分别是：请求行、消息报头、请求正文
-</code></pre><p>1、请求行以一个方法符号开头，以空格分开，后面跟着请求的URI和协议的版本，格式如下：Method Request-URI HTTP-Version CRLF<br>其中 Method表示请求方法；Request-URI是一个统一资源标识符；HTTP-Version表示请求的HTTP协议版本；CRLF表示回车和换行（除了作为结尾的CRLF外，不允许出现单独的CR或LF字符）。</p>
-<p>请求方法（所有方法全为大写）有多种，各个方法的解释如下：<br>GET     请求获取Request-URI所标识的资源<br>POST    在Request-URI所标识的资源后附加新的数据<br>HEAD    请求获取由Request-URI所标识的资源的响应消息报头<br>PUT     请求服务器存储一个资源，并用Request-URI作为其标识<br>DELETE  请求服务器删除Request-URI所标识的资源<br>TRACE   请求服务器回送收到的请求信息，主要用于测试或诊断<br>CONNECT 保留将来使用<br>OPTIONS 请求查询服务器的性能，或者查询与资源相关的选项和需求<br>应用举例：<br>GET方法：在浏览器的地址栏中输入网址的方式访问网页时，浏览器采用GET方法向服务器获取资源，eg:GET /form.html HTTP/1.1 (CRLF)</p>
-<p>POST方法要求被请求服务器接受附在请求后面的数据，常用于提交表单。<br>eg：POST /reg.jsp HTTP/ (CRLF)<br>Accept:image/gif,image/x-xbit,… (CRLF)<br>…<br>HOST:www.guet.edu.cn (CRLF)<br>Content-Length:22 (CRLF)<br>Connection:Keep-Alive (CRLF)<br>Cache-Control:no-cache (CRLF)<br>(CRLF)         //该CRLF表示消息报头已经结束，在此之前为消息报头<br>user=jeffrey&amp;pwd=1234  //此行以下为提交的数据</p>
-<p>HEAD方法与GET方法几乎是一样的，对于HEAD请求的回应部分来说，它的HTTP头部中包含的信息与通过GET请求所得到的信息是相同的。利用这个方法，不必传输整个资源内容，就可以得到Request-URI所标识的资源的信息。该方法常用于测试超链接的有效性，是否可以访问，以及最近是否更新。<br>2、请求报头后述<br>3、请求正文(略) </p>
-<p>三、HTTP协议详解之响应篇</p>
-<p> 在接收和解释请求消息后，服务器返回一个HTTP响应消息。</p>
-<p>HTTP响应也是由三个部分组成，分别是：状态行、消息报头、响应正文<br>1、状态行格式如下：<br>HTTP-Version Status-Code Reason-Phrase CRLF<br>其中，HTTP-Version表示服务器HTTP协议的版本；Status-Code表示服务器发回的响应状态代码；Reason-Phrase表示状态代码的文本描述。<br>状态代码有三位数字组成，第一个数字定义了响应的类别，且有五种可能取值：</p>
-<ul>
-<li>1xx：指示信息–表示请求已接收，继续处理</li>
-<li>2xx：成功–表示请求已被成功接收、理解、接受</li>
-<li>3xx：重定向–要完成请求必须进行更进一步的操作</li>
-<li>4xx：客户端错误–请求有语法错误或请求无法实现</li>
-<li>5xx：服务器端错误–服务器未能实现合法的请求<br><strong>常见状态代码、状态描述、说明：</strong></li>
-<li>200 OK      //客户端请求成功</li>
-<li>400 Bad Request  //客户端请求有语法错误，不能被服务器所理解</li>
-<li>401 Unauthorized //请求未经授权，这个状态代码必须和WWW-Authenticate报头域一起使用 </li>
-<li>403 Forbidden  //服务器收到请求，但是拒绝提供服务</li>
-<li>404 Not Found  //请求资源不存在，eg：输入了错误的URL</li>
-<li>500 Internal Server Error //服务器发生不可预期的错误</li>
-<li>503 Server Unavailable  //服务器当前不能处理客户端的请求，一段时间后可能恢复正常<br>eg：HTTP/1.1 200 OK （CRLF）</li>
-</ul>
-<p>2、响应报头后述</p>
-<p>3、响应正文就是服务器返回的资源的内容 </p>
-<p>四、HTTP协议详解之消息报头篇</p>
-<p>HTTP消息由客户端到服务器的请求和服务器到客户端的响应组成。请求消息和响应消息都是由开始行（对于请求消息，开始行就是请求行，对于响应消息，开始行就是状态行），消息报头（可选），空行（只有CRLF的行），消息正文（可选）组成。</p>
-<p>HTTP消息报头包括普通报头、请求报头、响应报头、实体报头。<br>每一个报头域都是由名字+“：”+空格+值 组成，消息报头域的名字是大小写无关的。</p>
-<ul>
-<li>1、普通报头<br>在普通报头中，有少数报头域用于所有的请求和响应消息，但并不用于被传输的实体，只用于传输的消息。<br>eg：<br>Cache-Control   用于指定缓存指令，缓存指令是单向的（响应中出现的缓存指令在请求中未必会出现），且是独立的（一个消息的缓存指令不会影响另一个消息处理的缓存机制），HTTP1.0使用的类似的报头域为Pragma。<br>请求时的缓存指令包括：no-cache（用于指示请求或响应消息不能缓存）、no-store、max-age、max-stale、min-fresh、only-if-cached;<br>响应时的缓存指令包括：public、private、no-cache、no-store、no-transform、must-revalidate、proxy-revalidate、max-age、s-maxage.<br>eg：为了指示IE浏览器（客户端）不要缓存页面，服务器端的JSP程序可以编写如下：response.sehHeader(“Cache-Control”,”no-cache”);<br>//response.setHeader(“Pragma”,”no-cache”);作用相当于上述代码，通常两者//合用<br>这句代码将在发送的响应消息中设置普通报头域：Cache-Control:no-cache</li>
-</ul>
-<p>Date普通报头域表示消息产生的日期和时间</p>
-<p>Connection普通报头域允许发送指定连接的选项。例如指定连接是连续，或者指定“close”选项，通知服务器，在响应完成后，关闭连接</p>
-<ul>
-<li><p>2、请求报头<br>请求报头允许客户端向服务器端传递请求的附加信息以及客户端自身的信息。<br>常用的请求报头<br>Accept<br>Accept请求报头域用于指定客户端接受哪些类型的信息。eg：Accept：image/gif，表明客户端希望接受GIF图象格式的资源；Accept：text/html，表明客户端希望接受html文本。<br>Accept-Charset<br>Accept-Charset请求报头域用于指定客户端接受的字符集。eg：Accept-Charset:iso-8859-1,gb2312.如果在请求消息中没有设置这个域，缺省是任何字符集都可以接受。<br>Accept-Encoding<br>Accept-Encoding请求报头域类似于Accept，但是它是用于指定可接受的内容编码。eg：Accept-Encoding:gzip.deflate.如果请求消息中没有设置这个域服务器假定客户端对各种内容编码都可以接受。<br>Accept-Language<br>Accept-Language请求报头域类似于Accept，但是它是用于指定一种自然语言。eg：Accept-Language:zh-cn.如果请求消息中没有设置这个报头域，服务器假定客户端对各种语言都可以接受。<br>Authorization<br>Authorization请求报头域主要用于证明客户端有权查看某个资源。当浏览器访问一个页面时，如果收到服务器的响应代码为401（未授权），可以发送一个包含Authorization请求报头域的请求，要求服务器对其进行验证。<br>Host（发送请求时，该报头域是必需的）<br>Host请求报头域主要用于指定被请求资源的Internet主机和端口号，它通常从HTTP URL中提取出来的，eg：<br>我们在浏览器中输入：<a href="http://www.guet.edu.cn/index.html" target="_blank" rel="external">http://www.guet.edu.cn/index.html</a><br>浏览器发送的请求消息中，就会包含Host请求报头域，如下：<br>Host：www.guet.edu.cn<br>此处使用缺省端口号80，若指定了端口号，则变成：Host：www.guet.edu.cn:指定端口号<br>User-Agent<br>我们上网登陆论坛的时候，往往会看到一些欢迎信息，其中列出了你的操作系统的名称和版本，你所使用的浏览器的名称和版本，这往往让很多人感到很神奇，实际上，服务器应用程序就是从User-Agent这个请求报头域中获取到这些信息。User-Agent请求报头域允许客户端将它的操作系统、浏览器和其它属性告诉服务器。不过，这个报头域不是必需的，如果我们自己编写一个浏览器，不使用User-Agent请求报头域，那么服务器端就无法得知我们的信息了。<br>请求报头举例：<br>GET /form.html HTTP/1.1 (CRLF)<br>Accept:image/gif,image/x-xbitmap,image/jpeg,application/x-shockwave-flash,application/vnd.ms-excel,application/vnd.ms-powerpoint,application/msword,<em>/</em> (CRLF)<br>Accept-Language:zh-cn (CRLF)<br>Accept-Encoding:gzip,deflate (CRLF)<br>If-Modified-Since:Wed,05 Jan 2007 11:21:25 GMT (CRLF)<br>If-None-Match:W/“80b1a4c018f3c41:8317” (CRLF)<br>User-Agent:Mozilla/4.0(compatible;MSIE6.0;Windows NT 5.0) (CRLF)<br>Host:www.guet.edu.cn (CRLF)<br>Connection:Keep-Alive (CRLF)<br>(CRLF)</p>
-</li>
-<li><p>3、响应报头<br>响应报头允许服务器传递不能放在状态行中的附加响应信息，以及关于服务器的信息和对Request-URI所标识的资源进行下一步访问的信息。<br>常用的响应报头<br>Location<br>Location响应报头域用于重定向接受者到一个新的位置。Location响应报头域常用在更换域名的时候。<br>Server<br>Server响应报头域包含了服务器用来处理请求的软件信息。与User-Agent请求报头域是相对应的。下面是<br>Server响应报头域的一个例子：<br>Server：Apache-Coyote/1.1<br>WWW-Authenticate<br>WWW-Authenticate响应报头域必须被包含在401（未授权的）响应消息中，客户端收到401响应消息时候，并发送Authorization报头域请求服务器对其进行验证时，服务端响应报头就包含该报头域。<br>eg：WWW-Authenticate:Basic realm=”Basic Auth Test!”  //可以看出服务器对请求资源采用的是基本验证机制。</p>
-</li>
-</ul>
-<ul>
-<li>4、实体报头<br>请求和响应消息都可以传送一个实体。一个实体由实体报头域和实体正文组成，但并不是说实体报头域和实体正文要在一起发送，可以只发送实体报头域。实体报头定义了关于实体正文（eg：有无实体正文）和请求所标识的资源的元信息。<br>常用的实体报头<br>Content-Encoding<br>Content-Encoding实体报头域被用作媒体类型的修饰符，它的值指示了已经被应用到实体正文的附加内容的编码，因而要获得Content-Type报头域中所引用的媒体类型，必须采用相应的解码机制。Content-Encoding这样用于记录文档的压缩方法，eg：Content-Encoding：gzip<br>Content-Language<br>Content-Language实体报头域描述了资源所用的自然语言。没有设置该域则认为实体内容将提供给所有的语言阅读<br>者。eg：Content-Language:da<br>Content-Length<br>Content-Length实体报头域用于指明实体正文的长度，以字节方式存储的十进制数字来表示。<br>Content-Type<br>Content-Type实体报头域用语指明发送给接收者的实体正文的媒体类型。eg：<br>Content-Type:text/html;charset=ISO-8859-1<br>Content-Type:text/html;charset=GB2312<br>Last-Modified<br>Last-Modified实体报头域用于指示资源的最后修改日期和时间。<br>Expires<br>Expires实体报头域给出响应过期的日期和时间。为了让代理服务器或浏览器在一段时间以后更新缓存中(再次访问曾访问过的页面时，直接从缓存中加载，缩短响应时间和降低服务器负载)的页面，我们可以使用Expires实体报头域指定页面过期的时间。eg：Expires：Thu，15 Sep 2006 16:23:12 GMT<br>HTTP1.1的客户端和缓存必须将其他非法的日期格式（包括0）看作已经过期。eg：为了让浏览器不要缓存页面，我们也可以利用Expires实体报头域，设置为0，jsp中程序如下：response.setDateHeader(“Expires”,”0”);</li>
-</ul>
-<p><strong>五、利用telnet观察http协议的通讯过程</strong></p>
-<p>实验目的及原理：<br>    利用MS的telnet工具，通过手动输入http请求信息的方式，向服务器发出请求，服务器接收、解释和接受请求后，会返回一个响应，该响应会在telnet窗口上显示出来，从而从感性上加深对http协议的通讯过程的认识。</p>
-<p>实验步骤：</p>
-<p>1、打开telnet<br>1.1 打开telnet<br>运行–&gt;cmd–&gt;telnet</p>
-<p>1.2 打开telnet回显功能<br>set localecho</p>
-<p>2、连接服务器并发送请求<br>2.1 open www.guet.edu.cn 80  //注意端口号不能省略</p>
-<pre><code>HEAD /index.asp HTTP/1.0
-Host:www.guet.edu.cn
-</code></pre><p>   /<em>我们可以变换请求方法,请求桂林电子主页内容,输入消息如下</em>/<br>    open www.guet.edu.cn 80 </p>
-<pre><code>GET /index.asp HTTP/1.0  //请求资源的内容
-Host:www.guet.edu.cn  
-</code></pre><p>2.2 open www.sina.com.cn 80  //在命令提示符号下直接输入telnet www.sina.com.cn 80<br>    HEAD /index.asp HTTP/1.0<br>    Host:www.sina.com.cn</p>
-<p>3 实验结果：</p>
-<p>3.1 请求信息2.1得到的响应是:</p>
-<p>HTTP/1.1 200 OK                                              //请求成功<br>Server: Microsoft-IIS/5.0                                    //web服务器<br>Date: Thu,08 Mar 200707:17:51 GMT<br>Connection: Keep-Alive<br>Content-Length: 23330<br>Content-Type: text/html<br>Expries: Thu,08 Mar 2007 07:16:51 GMT<br>Set-Cookie: ASPSESSIONIDQAQBQQQB=BEJCDGKADEDJKLKKAJEOIMMH; path=/<br>Cache-control: private</p>
-<p>//资源内容省略</p>
-<p>3.2 请求信息2.2得到的响应是:</p>
-<p>HTTP/1.0 404 Not Found       //请求失败<br>Date: Thu, 08 Mar 2007 07:50:50 GMT<br>Server: Apache/2.0.54 <unix><br>Last-Modified: Thu, 30 Nov 2006 11:35:41 GMT<br>ETag: “6277a-415-e7c76980”<br>Accept-Ranges: bytes<br>X-Powered-By: mod_xlayout_jh/0.0.1vhs.markII.remix<br>Vary: Accept-Encoding<br>Content-Type: text/html<br>X-Cache: MISS from zjm152-78.sina.com.cn<br>Via: 1.0 zjm152-78.sina.com.cn:80<squid 2.6.stables-20061207=""><br>X-Cache: MISS from th-143.sina.com.cn<br>Connection: close</squid></unix></p>
-<p>失去了跟主机的连接</p>
-<p>按任意键继续…</p>
-<p>4 .注意事项：1、出现输入错误，则请求不会成功。<br>          2、报头域不分大小写。<br>          3、更深一步了解HTTP协议，可以查看RFC2616，在<a href="http://www.letf.org/rfc上找到该文件。" target="_blank" rel="external">http://www.letf.org/rfc上找到该文件。</a><br>          4、开发后台程序必须掌握http协议</p>
-<p><strong>六、HTTP协议相关技术补充</strong></p>
-<p> 1、基础：<br>    高层协议有：文件传输协议FTP、电子邮件传输协议SMTP、域名系统服务DNS、网络新闻传输协议NNTP和HTTP协议等</p>
-<p>中介由三种：代理(Proxy)、网关(Gateway)和通道(Tunnel)，一个代理根据URI的绝对格式来接受请求，重写全部或部分消息，通过 URI的标识把已格式化过的请求发送到服务器。网关是一个接收代理，作为一些其它服务器的上层，并且如果必须的话，可以把请求翻译给下层的服务器协议。一 个通道作为不改变消息的两个连接之间的中继点。当通讯需要通过一个中介(例如：防火墙等)或者是中介不能识别消息的内容时，通道经常被使用。<br>     代理(Proxy)：一个中间程序，它可以充当一个服务器，也可以充当一个客户机，为其它客户机建立请求。请求是通过可能的翻译在内部或经过传递到其它的 服务器中。一个代理在发送请求信息之前，必须解释并且如果可能重写它。代理经常作为通过防火墙的客户机端的门户，代理还可以作为一个帮助应用来通过协议处 理没有被用户代理完成的请求。<br>网关(Gateway)：一个作为其它服务器中间媒介的服务器。与代理不同的是，网关接受请求就好象对被请求的资源来说它就是源服务器；发出请求的客户机并没有意识到它在同网关打交道。<br>网关经常作为通过防火墙的服务器端的门户，网关还可以作为一个协议翻译器以便存取那些存储在非HTTP系统中的资源。<br>    通道(Tunnel)：是作为两个连接中继的中介程序。一旦激活，通道便被认为不属于HTTP通讯，尽管通道可能是被一个HTTP请求初始化的。当被中继 的连接两端关闭时，通道便消失。当一个门户(Portal)必须存在或中介(Intermediary)不能解释中继的通讯时通道被经常使用。</p>
-<p>2、协议分析的优势—HTTP分析器检测网络攻击<br>以模块化的方式对高层协议进行分析处理，将是未来入侵检测的方向。<br>HTTP及其代理的常用端口80、3128和8080在network部分用port标签进行了规定</p>
-<p>3、HTTP协议Content Lenth限制漏洞导致拒绝服务攻击<br>使用POST方法时，可以设置ContentLenth来定义需要传送的数据长度，例如ContentLenth:999999999，在传送完成前，内 存不会释放，攻击者可以利用这个缺陷，连续向WEB服务器发送垃圾数据直至WEB服务器内存耗尽。这种攻击方法基本不会留下痕迹。<br><a href="http://www.cnpaf.net/Class/HTTP/0532918532667330.html" target="_blank" rel="external">http://www.cnpaf.net/Class/HTTP/0532918532667330.html</a></p>
-<p>4、利用HTTP协议的特性进行拒绝服务攻击的一些构思<br>服务器端忙于处理攻击者伪造的TCP连接请求而无暇理睬客户的正常请求（毕竟客户端的正常请求比率非常之小），此时从正常客户的角度看来，服务器失去响应，这种情况我们称作：服务器端受到了SYNFlood攻击（SYN洪水攻击）。<br>而Smurf、TearDrop等是利用ICMP报文来Flood和IP碎片攻击的。本文用“正常连接”的方法来产生拒绝服务攻击。<br>19端口在早期已经有人用来做Chargen攻击了，即Chargen_Denial_of_Service，但是！他们用的方法是在两台Chargen 服务器之间产生UDP连接，让服务器处理过多信息而DOWN掉，那么，干掉一台WEB服务器的条件就必须有2个：1.有Chargen服务2.有HTTP 服务<br>方法：攻击者伪造源IP给N台Chargen发送连接请求（Connect），Chargen接收到连接后就会返回每秒72字节的字符流（实际上根据网络实际情况，这个速度更快）给服务器。</p>
-<p>5、Http指纹识别技术<br>   Http指纹识别的原理大致上也是相同的：记录不同服务器对Http协议执行中的微小差别进行识别.Http指纹识别比TCP/IP堆栈指纹识别复杂许 多,理由是定制Http服务器的配置文件、增加插件或组件使得更改Http的响应信息变的很容易,这样使得识别变的困难；然而定制TCP/IP堆栈的行为 需要对核心层进行修改,所以就容易识别.<br>      要让服务器返回不同的Banner信息的设置是很简单的,象Apache这样的开放源代码的Http服务器,用户可以在源代码里修改Banner信息,然 后重起Http服务就生效了；对于没有公开源代码的Http服务器比如微软的IIS或者是Netscape,可以在存放Banner信息的Dll文件中修 改,相关的文章有讨论的,这里不再赘述,当然这样的修改的效果还是不错的.另外一种模糊Banner信息的方法是使用插件。<br>常用测试请求：<br>1：HEAD/Http/1.0发送基本的Http请求<br>2：DELETE/Http/1.0发送那些不被允许的请求,比如Delete请求<br>3：GET/Http/3.0发送一个非法版本的Http协议请求<br>4：GET/JUNK/1.0发送一个不正确规格的Http协议请求<br>Http指纹识别工具Httprint,它通过运用统计学原理,组合模糊的逻辑学技术,能很有效的确定Http服务器的类型.它可以被用来收集和分析不同Http服务器产生的签名。</p>
-<p>6、其他：为了提高用户使用浏览器时的性能，现代浏览器还支持并发的访问方式，浏览一个网页时同时建立多个连接，以迅速获得一个网页上的多个图标，这样能更快速完成整个网页的传输。<br>HTTP1.1中提供了这种持续连接的方式，而下一代HTTP协议：HTTP-NG更增加了有关会话控制、丰富的内容协商等方式的支持，来提供<br>更高效率的连接。</p>
-
-          
+<p>HTTP是一个属于应用层的面向对象的协议，由于其简捷、快速的方式，适用于分布式超媒体信息系统。它于1990年提出，经过几年的使用与发展，得到不断地完善和扩展。目前在WWW中使用的是HTTP/1.0的第六版，HTTP/1.1的规范化工作正在进行之中，而且HTTP-NG(Next Generation of HTTP)的建议已经提出。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/07/http协议（转载）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -790,37 +487,12 @@ Host:www.guet.edu.cn
 
       
         
-          
-            <p>几乎每个程序员在开发的过程中都会遇到内存泄漏，那么我们如何检测到app是否哪里出现内存泄漏呢？square公司推出了一款简单粗暴的检测内存泄漏的工具－－ LeakCanary</p>
-<p><strong>什么是内存泄漏？</strong><br> 内存泄漏是指由于疏忽或者错误造成程序未能释放已经不再使用的内存，内存泄漏不是指内存在物理上的消失，而是应用程序分配某段内存后，由于设计错误失去了对于这段内存的控制，因而造成内存的浪费。</p>
-<p>内存泄漏和内存溢出是两码事，不要混淆，内存溢出通俗的讲就是内存不够用,现在的只能手机内存越来越大,内存溢出的情况不是很多,但是内存泄露情况比较严重,LeakCanary的到来对我们来说是一个简单粗暴,直观的好工具<br><img src="http://static.open-open.com/lib/uploadImg/20151221/20151221115113_804.png" alt="enter image description here"></p>
-<p>上面这个图片就是这个工具的图标了,当你的程序处于debug模式的时候,就能看到他了,当然release没有</p>
-<p>LeakCanary作为一个简单粗暴的工具,用法也相当简单</p>
-<p>在build.gradle中引入LeakCanary</p>
-<pre><code>debugCompile &apos;com.squareup.leakcanary:leakcanary-android:1.3&apos;  
-    releaseCompile &apos;com.squareup.leakcanary:leakcanary-android-no-op:1.3&apos;  
-</code></pre><p>一个是debug包,一个是release包的,从引入包的结构也能看出端倪<br>由于LeakCanary是测试整个app的内存泄露情况,所以你需要在你的application中启动它</p>
-<pre><code>package com.zimo.guo;  
-
-import android.app.Application;  
-
-import com.squareup.leakcanary.LeakCanary;  
-
-/** 
- * Created by zimo on 15/8/7. 
- */  
-public class MyApplication extends Application {  
-
-    @Override  
-    public void onCreate() {  
-        super.onCreate();  
-        LeakCanary.install(this);  
-    }  
-}  
-</code></pre><p>ok,现在就可以测试程序中的内存泄露情况,直观明了<br><img src="http://static.open-open.com/lib/uploadImg/20151221/20151221115136_192.png" alt="enter image description here"></p>
-<p>这么有逼格的工具,赶紧来试试吧,要想使你的app的内存泄露灰飞烟灭,try it</p>
-
-          
+          <p>几乎每个程序员在开发的过程中都会遇到内存泄漏，那么我们如何检测到app是否哪里出现内存泄漏呢？square公司推出了一款简单粗暴的检测内存泄漏的工具－－ LeakCanary<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/07/简单强大的Android内存泄漏检测工具-LeakCanary/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -911,32 +583,12 @@ public class MyApplication extends Application {
 
       
         
-          
-            <p>在Android平台上面，应用程序OOM异常永远都是值得关注的问题。通常这一块也是程序这中的重点之一。这下我就如何解决OOM作一点简单的介绍。<br>      首先，OOM就是内存溢出，即Out Of Memory。也就是说内存占有量超过了VM所分配的最大。<br>     怎么解决OOM，通常OOM都发生在需要用到大量内存的情况下（创建或解析Bitmap，分配特大的数组等），在这样的一种情况下，就可能出现OOM，据我现在了解到，多数OOM都是因为Bitmap太大。所以，这里我就专门针对如何解决Bitmap的OOM。其实最核发的就是只加载可见范围内的Bitmap，试想这样一种情况，在GridView或ListView中，数据量有5000，每一屏只显示20个元素，那么不可见的，我们是不需要保存Bitmap在内在中的。所以我们就是只把那么可见的Bitmap保留在内存中，那些不可见的，就释放掉。当元素滑出来时，再去加载Bitmap。<br>         这里我有两种方式，都可以避免OOM。</p>
-<p>一，主动释放Bitmap的内存<br>这种方式我简单说一下，不太推荐，这也是我最开始使用的一种方法，但最后证明它不是最好的。（不推荐）</p>
-<p>  它的本质思路是：<br>  1、只加载可见区域的Bitmap</p>
-<p>  2、滑动时不加载</p>
-<p>  3、停止滑动（Idle）后，开始重新加载可见区域的图片</p>
-<p>  4、释放滑出可见区域的Bitmap的内在。</p>
-<p>  它比较复杂：<br>    1、我们需要监听GridView/ListView的滑动事件，这个很简单做到，AbsListView#setOnScrollListener(OnScrollListener l)<br>      2、主动调用Bitmap#recycle()方法，它会导致一个问题，必须判断这个Bitmap是否被一个View(ImageView等）所引用，如果被引用，我们不能简单地调用recycle()方法，这样会导致异常，说是View使用了一个已经被回收的Bitmap。<br>      3，我们必须设计自己的线程来控制开始/暂停等，因为GridView/ListView的滑动状态可能不断地变化，也就是说滑动-&gt;停止-&gt;滑动，这种状态可能不断变化，这样就会导致我们的线程中的run()方法里面的逻辑比较复杂，一旦复杂，问题就可能就得更多。<br>       基于以上几点，这种方式不是最好的，所以不推荐。</p>
-<p>二，设计Cache<br>    这种方式，我觉得是比较好的一种，它首先利用了cache，我认为cache是一个很重要的东西，把Bitmap的内存单独放在一个地方来管理，这个地方就是cache，它的容量是一定的，我们可能会不断的向这个cache中添加元素，也可能不断的移除元素。</p>
-<p>为了更好的说明这种方式，先要介绍一下LruCache。</p>
-<p>  LruCache<br>    1、这其实就是一个LinkedHashMap，任意时刻，当一个值被访问时，它就会被移动到队列的开始位置，所以这也是为什么要用LinkedHashMap的原因，因为要频繁的做移动操作，为了提高性能，所以要用LinkedHashMap。当cache满了时，此时再向cache里面添加一个值，那么，在队列最后的值就会从队列里面移除，这个值就有可能被GC回收掉。<br>     2、如果我们想主动释放内存，也是可以的，我们可以重写entryRemoved(Boolean, K, V, V)方法。<br>      3、这个类是线程安全的，在多线程下面使用这个类，没不会存在问题。<br><em>[java] view plain copy 在CODE上查看代码片派生到我的代码片</em></p>
-<pre><code>synchronized (cache) {  
-if (cache.get(key) == null) {  
-    cache.put(key, value);  
- }}  
-</code></pre><p>4、LruCache的APILevel是12，也就是说，我们在SDK 2.3.x以下是无法使用的，但是没关系，LruCache的源码不算复杂，我们可以直接把它拷贝到自己的工程目录就可以了。<br>   <strong>  AsyncTask&lt;&gt; </strong><br>    这个类也是一个很重要也很常用的类。它封装了Thread和Handler，我们使用就更加方便，不用关注Handler，我们知道，在后台线程中是不能更新UI，而很多情况下，我们在后台线程做完一件事情后，一般都会更新UI，一般的做法是向关联到UI线程的Handler发送一个message，在Handler里面去处理这个message，从而更新UI。用了AsyncTask之后，我们就不用关注Handler了。这个类有几个重要的方法：</p>
-<ul>
-<li>1、onPreExecute(): 在UI线程里面调用，它在这个task执行后会立即调用。我们在这个方法里面通常是用于建立一个任务，比如显示一个等待对话框来通知用户。</li>
-<li>2、doInBackground(Params…)：这个方法从名字就可以看出，它是运行在后台线程的，在这个方法里面，去做耗时的事情，比如下载访问网络，操作文件等。这这个方法里面，我们可以调用publishProgress(Progress…)来调用当前任务的进度，调用了这个方法后，对应的onProgressUpdate(Progress…)方法会被调用，这个方法是运行在UI线程的。</li>
-<li>3、onProgressUpdate(Progress…)：运行在UI线程，在调用publishProgress()方法之后。这个方法用来在UI上显示任何形式的进度，比如你可以显示一个等待对话框，也可以显示一个文本形式的loga，还可以显示toast对话框。</li>
-<li>4、onPostExecute(Result)：当task结束后调用，它运行在UI线程。</li>
-<li>5、取消一个task，我们可以在任何时候调用cancel(Boolean)来取消一个任务，当调用了cancel()方法后，onCancelled(Object)方法就会被调用，onPostExecute(Object)方法不会被调用，在doInBackground(Object[])方法中，我们可以用isCancelled()方法来检查任务是否取消。</li>
-<li>6、几点规则<br>AsyncTask实例必须在UI线程中创建<br>execute(Params…)方法必须在UI线程中调用。<br>不用手动调用onPreExecute(), onPostExecute(), doInBackground(), onProgressUpdate()方法。<br>一个任务只能被执行一次。<br><strong>总的思路</strong>a<br>1、始终从cache中去取Bitmap，如果取到Bitmap，就直接把这个Bitmap设置到ImageView上面。<br>2、如果缓存中不存在，那么启动一个task去加载（可能从文件来，也可能从网络）。<br>3、每一个ImageView上面都可能绑定一个task，所以，这个ImageView必须提供一个方法能得到与之相关联的task，为什么要这样做？因为在给一个ImageView绑定task之前，必须要把原先的task取消。<br>4、思路很简单，但细节很多，用文字来一一说明也不太现实。我上传一个demo，大家可以参考代码和文章来理解。</li>
-</ul>
-
-          
+          <p>在Android平台上面，应用程序OOM异常永远都是值得关注的问题。通常这一块也是程序这中的重点之一。这下我就如何解决OOM作一点简单的介绍。<br>      首先，OOM就是内存溢出，即Out Of Memory。也就是说内存占有量超过了VM所分配的最大。<br>     怎么解决OOM，通常OOM都发生在需要用到大量内存的情况下（创建或解析Bitmap，分配特大的数组等），在这样的一种情况下，就可能出现OOM，据我现在了解到，多数OOM都是因为Bitmap太大。所以，这里我就专门针对如何解决Bitmap的OOM。其实最核发的就是只加载可见范围内的Bitmap，试想这样一种情况，在GridView或ListView中，数据量有5000，每一屏只显示20个元素，那么不可见的，我们是不需要保存Bitmap在内在中的。所以我们就是只把那么可见的Bitmap保留在内存中，那些不可见的，就释放掉。当元素滑出来时，再去加载Bitmap。<br>         这里我有两种方式，都可以避免OOM。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/07/关于android-OOM-常用解决方案/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1027,79 +679,14 @@ if (cache.get(key) == null) {
 
       
         
-          
-            <p>##Mac上搭建基于GitHub的Hexo博客</p>
+          <p>##Mac上搭建基于GitHub的Hexo博客</p>
 <pre><code>这是一篇详细文章来讲述用Mac搭建Hexo博客于Github上的完整历程， 也是踩了无数的坑搭起来的，现在写下些经验来分享，希望能帮大家少踩些坑。
-</code></pre><p>###环境配置<br>Hexo官网上本就有对Hexo安装及使用的详细介绍，墙裂推荐。这里来讲述自己安装的亲身步骤，或有区别。</p>
-<p><em>1.Node.js</em><br>用来生成静态页面。移步Node.js官网，下载v5.5.0 Stable 一路安装即可。</p>
-<p><em>2.Git</em><br>用来将本地Hexo内容提交到Github上。Xcode自带Git，这里不再赘述。如果没有Xcode可以参考Hexo官网上的安装方法。</p>
-<p><em>安装Hexo</em><br>当Node.js和Git都安装好后就可以正式安装Hexo了，终端执行如下命令：</p>
-<pre><code>$ sudo npm install -g hexo
-</code></pre><p>输入管理员密码（Mac登录密码）即开始安装 (sudo:linux系统管理指令  -g:全局安装)</p>
-<p>注意坑一：Hexo官网上的安装命令是$ npm install -g hexo-cli，安装时不要忘记前面加上sudo，否则会因为权限问题报错。<br>初始化<br>终端cd到一个你选定的目录，执行hexo init命令：</p>
-<pre><code>$ hexo init blog
-</code></pre><p>blog是你建立的文件夹名称。cd到blog文件夹下，执行如下命令，安装npm：</p>
-<pre><code>$ npm install
-</code></pre><p>执行如下命令，开启hexo服务器：</p>
-<pre><code>$ hexo s
-</code></pre><p>此时，浏览器中打开网址<a href="http://localhost:4000，能看到如下页面：" target="_blank" rel="external">http://localhost:4000，能看到如下页面：</a></p>
-<p><a href="http://localhost:4000" target="_blank" rel="external">http://localhost:4000</a><br>本地设置好后，接下来开始关联Github。</p>
-<p>####关联Github</p>
-<p>#####1.创建仓库<br>登录你的Github帐号，新建仓库，名为用户名.github.io固定写法，如gonghonglou.github.io即下图中1所示：</p>
-<p>本地的blog文件夹下内容为：</p>
-<p>_config.yml<br>db.json<br>node_modules<br>package.json<br>scaffolds<br>source<br>themes<br>终端cd到blog文件夹下，vim打开_config.yml，命令如下：</p>
-<pre><code>$ vim _config.yml
-</code></pre><p>打开后往下滑到最后，修改成下边的样子：</p>
-<p>deploy:<br>    type: git<br>    repository: <a href="https://github.com/gonghonglou/gonghonglou.github.io.git" target="_blank" rel="external">https://github.com/gonghonglou/gonghonglou.github.io.git</a><br>    branch: master<br>你需要将repository后gonghonglou换成你自己的用户名，地址在上图2位置获取。hexo 3.1.1版本后type:值为git。</p>
-<p><strong>注意坑二：在配置所有的_config.yml文件时（包括theme中的），在所有的冒号:后边都要加一个空格，否则执行hexo命令会报错，切记 切记</strong></p>
-<p>在blog文件夹目录下执行生成静态页面命令：</p>
-<pre><code>$ hexo generate        或者：hexo g
-</code></pre><p>此时若出现如下报错：</p>
-<pre><code>ERROR Local hexo not found in ~/blog
-ERROR Try runing: &apos;npm install hexo --save&apos;
-</code></pre><p>则执行命令：</p>
-<pre><code>npm install hexo --save
-</code></pre><p>若无报错，自行忽略此步骤。<br>再执行配置命令：</p>
-<pre><code>$ hexo deploy            或者：hexo d
-</code></pre><p>注意坑三：若执行命令hexo deploy仍然报错：无法连接git或找不到git，则执行如下命令来安装hexo-deployer-git：</p>
-<pre><code>$ npm install hexo-deployer-git --save
-</code></pre><p>再次执行hexo generate和hexo deploy命令。</p>
-<p>若你未关联Github，则执行hexo deploy命令时终端会提示你输入Github的用户名和密码，即</p>
-<pre><code>Username for &apos;https://github.com&apos;:
-Password for &apos;https://github.com&apos;:
-</code></pre><p>hexo deploy 命令执行成功后，浏览器中打开网址<a href="http://gonghonglou.github.io（将gonghonglou换成你的用户名）能看到和打开http://localhost:4000时一样的页面。" target="_blank" rel="external">http://gonghonglou.github.io（将gonghonglou换成你的用户名）能看到和打开http://localhost:4000时一样的页面。</a></p>
-<p>为避免每次输入Github用户名和密码的麻烦，可参照第二节方法</p>
-<p>#####2.添加ssh key到Github<br>1.1.检查SSH keys是否存在Github<br>执行如下命令，检查SSH keys是否存在。如果有文件id_rsa.pub或id_dsa.pub，则直接进入步骤1.3将SSH key添加到Github中，否则进入下一步生成SSH key。</p>
-<pre><code>$ ls -al ~/.ssh
-</code></pre><p>1.2.生成新的ssh key<br>执行如下命令生成public/private rsa key pair，注意将your_email@example.com换成你自己注册Github的邮箱地址。</p>
-<pre><code>$ ssh-keygen -t rsa -C &quot;your_email@example.com&quot;
-</code></pre><p>默认会在相应路径下（~/.ssh/id_rsa.pub）生成id_rsa和id_rsa.pub两个文件。</p>
-<p>1.3.将ssh key添加到Github中<br>Find前往文件夹~/.ssh/id_rsa.pub打开id_rsa.pub文件，里面的信息即为SSH key，将这些信息复制到Github的Add SSH key页面即可。</p>
-<p>进入Github –&gt; Settings –&gt; SSH keys –&gt; add SSH key:</p>
-<p>Title里任意添一个标题，将复制的内容粘贴到Key里，点击下方Add key绿色按钮即可。</p>
-<p>#####3.发布文章<br>终端cd到blog文件夹下，执行如下命令新建文章：</p>
-<pre><code>hexo new &quot;postName&quot;
-</code></pre><p>名为postName.md的文件会建在目录/blog/source/_posts下。你当然可以用vim来编辑文章。</p>
-<p>文章编辑完成后，终端cd到blog文件夹下，执行如下命令来发布：</p>
-<pre><code>hexo generate             //生成静态页面
-hexo deploy            //将文章部署到Github
-</code></pre><p>至此，Mac上搭建基于Github的Hexo博客就完成了。下面的内容是介绍安装theme，添加评论功能和绑定个人域名，如果有兴趣且还有耐心的话，请继续吧。</p>
-<p>安装theme<br>你可以到Hexo官网主题页去搜寻自己喜欢的theme。这里以hexo-theme-next为例</p>
-<p>终端cd到 blog 目录下执行如下命令：</p>
-<pre><code>$ git clone https://github.com/iissnan/hexo-theme-next themes/next
-</code></pre><p>将blog目录下_config.yml里theme的名称landscape修改为next</p>
-<p>终端cd到blog目录下执行如下命令(每次部署文章的步骤)：</p>
-<pre><code>$ hexo clean           //清除缓存文件 (db.json) 和已生成的静态文件 (public)
-$ hexo g             //生成缓存和静态文件
-$ hexo d             //重新部署到服务器
-</code></pre><p>至于更改theme内容，比如名称，描述，头像等去修改blog/_config.yml文件和blog/themes/next/_config.yml文件中对应的属性名称即可， 不要忘记冒号:后加空格。 NexT 使用文档里有极详细的介绍。</p>
-<p>终端cd到blog目录下执行如下命令重新部署：</p>
-<pre><code>$ hexo clean
-$ hexo g
-$ hexo d
-</code></pre><p>大功告成！</p>
-
-          
+</code></pre><p>###环境配置<br>Hexo官网上本就有对Hexo安装及使用的详细介绍，墙裂推荐。这里来讲述自己安装的亲身步骤，或有区别。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/07/setup-your-blog/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1190,18 +777,12 @@ $ hexo d
 
       
         
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-          
+          <p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/07/hello-world/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
