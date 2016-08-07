@@ -1,0 +1,786 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="http://blog.csdn.net/lmj623565791/article/details/45460089；本文出自:【张鸿洋的博客】1、概述
+大家在Android开发时，肯定会觉得屏幕适配是个尤其痛苦的事，各种屏幕尺寸适配起来蛋疼无比。如果我们换个角度我们看下这个问题，不知道大家有没有了解过web前端开发，或者说大家对于网页都不陌生吧，其实适配的问题在web页面的设计中理论上也存在，为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android屏幕适配方案">
+<meta property="og:url" content="http://yoursite.com/2016/08/07/Android屏幕适配方案/index.html">
+<meta property="og:site_name" content="fooling dutchman的博客">
+<meta property="og:description" content="http://blog.csdn.net/lmj623565791/article/details/45460089；本文出自:【张鸿洋的博客】1、概述
+大家在Android开发时，肯定会觉得屏幕适配是个尤其痛苦的事，各种屏幕尺寸适配起来蛋疼无比。如果我们换个角度我们看下这个问题，不知道大家有没有了解过web前端开发，或者说大家对于网页都不陌生吧，其实适配的问题在web页面的设计中理论上也存在，为">
+<meta property="og:updated_time" content="2016-08-07T10:07:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android屏幕适配方案">
+<meta name="twitter:description" content="http://blog.csdn.net/lmj623565791/article/details/45460089；本文出自:【张鸿洋的博客】1、概述
+大家在Android开发时，肯定会觉得屏幕适配是个尤其痛苦的事，各种屏幕尺寸适配起来蛋疼无比。如果我们换个角度我们看下这个问题，不知道大家有没有了解过web前端开发，或者说大家对于网页都不陌生吧，其实适配的问题在web页面的设计中理论上也存在，为">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/08/07/Android屏幕适配方案/"/>
+
+  <title> Android屏幕适配方案 | fooling dutchman的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">fooling dutchman的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android屏幕适配方案
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-07T18:00:22+08:00" content="2016-08-07">
+              2016-08-07
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="http://blog.csdn.net/lmj623565791/article/details/45460089；" target="_blank" rel="external">http://blog.csdn.net/lmj623565791/article/details/45460089；</a><br>本文出自:【张鸿洋的博客】<br>1、概述</p>
+<p>大家在Android开发时，肯定会觉得屏幕适配是个尤其痛苦的事，各种屏幕尺寸适配起来蛋疼无比。如果我们换个角度我们看下这个问题，不知道大家有没有了解过web前端开发，或者说大家对于网页都不陌生吧，其实适配的问题在web页面的设计中理论上也存在，为什么这么说呢？电脑的显示器的分辨率、包括手机分辨率，我敢说分辨率的种类远超过Android设备的分辨率，那么有一个很奇怪的现象：</p>
+<p>为什么Web页面设计人员从来没有说过，尼玛适配好麻烦？<br>那么，到底是什么原因，让网页的设计可以在千差万别的分辨率的分辨率中依旧能给用户一个优质的体验呢？带着这个疑惑，我问了下媳妇（前端人员），媳妇睁大眼睛问我：什么叫适配？fc，尼玛，看来的确没有这类问题。后来再我仔细的追问后，她告诉我，噢，这个尺寸呀，我都是设置为20%的~~追根到底，其实就是一个原因，网页提供了百分比计算大小。</p>
+<p>同样的，大家拿到UI给的设计图以后，是不是抱怨过尼玛你标识的都是px，我项目里面用dp，这什么玩意，和UI人员解释，UI妹妹也不理解。那么本例同样可以解决Android工程师和UI妹妹间的矛盾~UI给出一个固定尺寸的设计稿，然后你在编写布局的时候不用思考，无脑照抄上面标识的像素值，就能达到完美适配，理想丰不丰满~~。</p>
+<p>然而，Android对于不同的屏幕给出的适配方案是dp，那么dp与百分比的差距到底在哪里？</p>
+<p>2、dp vs 百分比</p>
+<p>dp<br>我们首先看下dp的定义：</p>
+<p>Density-independent pixel (dp)独立像素密度。标准是160dip.即1dp对应1个pixel，计算公式如：px = dp * (dpi / 160)，屏幕密度越大，1dp对应 的像素点越多。<br>上面的公式中有个dpi，dpi为DPI是Dots Per Inch（每英寸所打印的点数），也就是当设备的dpi为160的时候1px=1dp；<br>好了，上述这些概念记不记得住没关系，只要记住一点dp是与像素无关的，在实际使用中1dp大约等于1/160inch。</p>
+<p>那么dp究竟解决了适配上的什么问题？可以看出1dp = 1/160inch；那么它至少能解决一个问题，就是你在布局文件写某个View的宽和高为160dp<em>160dp，这个View在任何分辨率的屏幕中，显示的尺寸大小是大约是一致的（可能不精确），大概是 1 inch </em> 1 inch。</p>
+<p>但是，这样并不能够解决所有的适配问题：</p>
+<p>呈现效果仍旧会有差异，仅仅是相近而已<br>当设备的物理尺寸存在差异的时候，dp就显得无能为力了。为4.3寸屏幕准备的UI，运行在5.0寸的屏幕上，很可能在右侧和下侧存在大量的空白。而5.0寸的UI运行到4.3寸的设备上，很可能显示不下。<br>以上两点，来自参考链接1<br>一句话，总结下，dp能够让同一数值在不同的分辨率展示出大致相同的尺寸大小。但是当设备的尺寸差异较大的时候，就无能为力了。适配的问题还需要我们自己去做，于是我们可能会这么做：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;  
+&lt;resources&gt;  
+&lt;!-- values-hdpi 480X800 --&gt;  
+&lt;dimen name=&quot;imagewidth&quot;&gt;120dip&lt;/dimen&gt;      
+&lt;/resources&gt;  
+
+&lt;resources&gt;  
+&lt;!-- values-hdpi-1280x800 --&gt;  
+&lt;dimen name=&quot;imagewidth&quot;&gt;220dip&lt;/dimen&gt;      
+&lt;/resources&gt;  
+ &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;  
+ &lt;resources&gt;  
+&lt;!-- values-hdpi  480X320 --&gt;  
+&lt;dimen name=&quot;imagewidth&quot;&gt;80dip&lt;/dimen&gt;      
+&lt;/resources&gt; 
+</code></pre><p>上述代码片段来自网络，也就是说，我们为了优质的用户体验，依然需要去针对不同的dpi设置，编写多套数值文件。<br>可以看出，dp并没有能解决适配问题。下面看百分比。</p>
+<p>百分比<br>这个概念不用说了，web中支持控件的宽度可以去参考父控件的宽度去设置百分比，最外层控件的宽度参考屏幕尺寸设置百分比，那么其实中Android设备中，只需要支持控件能够参考屏幕的百分比去计算宽高就足够了。<br>比如，我现在以下几个需求：</p>
+<p>对于图片展示的Banner，为了起到该有的效果，我希望在任何手机上显示的高度为屏幕高度的1/4<br>我的首页分上下两栏，我希望每个栏目的屏幕高度为11/24，中间间隔为1/12<br>slidingmenu的宽度为屏幕宽度的80%<br>当然了这仅仅是从一个大的层面上来说，其实小范围布局，可能百分比将会更加有用。</p>
+<p>那么现在不支持百分比，实现上述的需求，可能需要1、代码去动态计算（很多人直接pass了，太麻烦）;2、利用weight（weight必须依赖Linearlayout，而且并不能适用于任何场景）</p>
+<p>再比如：我的某个浮动按钮的高度和宽度希望是屏幕高度的1/12，我的某个Button的宽度希望是屏幕宽度的1/3。</p>
+<p>上述的所有的需求，利用dp是无法完成的，我们希望控件的尺寸可以按照下列方式编写：</p>
+<pre><code>&lt;Button
+ android:text=&quot;@string/hello_world&quot;
+ android:layout_width=&quot;20%w&quot;
+ android:layout_height=&quot;10%h&quot;/&gt;
+</code></pre><p>利用屏幕的宽和高的比例去定义View的宽和高。</p>
+<p>好了，到此我们可以看到dp与百分比的区别，而百分比能够更好的解决我们的适配问题。</p>
+<p>some 适配tips<br>我们再来看看一些适配的tips</p>
+<p>多用match_parent<br>多用weight<br>自定义view解决<br>其实上述3点tip，归根结底还是利用百分比，match_parent相当于100%参考父控件；weight即按比例分配；自定义view无非是因为里面多数尺寸是按照百分比计算的；</p>
+<p>通过这些tips，我们更加的看出如果能在Android中引入百分比的机制，将能解决大多数的适配问题，下面我们就来看看如何能够让Android支持百分比的概念。</p>
+<p>3、百分比的引入</p>
+<p>1、引入</p>
+<p>其实我们的解决方案，就是在项目中针对你所需要适配的手机屏幕的分辨率各自简历一个文件夹。</p>
+<p>如下图：</p>
+<p>然后我们根据一个基准，为基准的意思就是：</p>
+<p>比如480<em>320的分辨率为基准<br>宽度为320，将任何分辨率的宽度分为320份，取值为x1-x320<br>高度为480，将任何分辨率的高度分为480份，取值为y1-y480<br>例如对于800</em>480的宽度480：</p>
+<p>可以看到x1 = 480 / 基准 = 480 / 320 = 1.5 ;</p>
+<p>其他分辨率类似~~<br>你可能会问，这么多文件，难道我们要手算，然后自己编写？不要怕，下文会说。</p>
+<p>那么，你可能有个疑问，这么写有什么好处呢？</p>
+<p>假设我现在需要在屏幕中心有个按钮，宽度和高度为我们屏幕宽度的1/2，我可以怎么编写布局文件呢？</p>
+<framelayout><br><br>    <button android:layout_gravity="center" android:gravity="center" android:text="@string/hello_world" android:layout_width="@dimen/x160" android:layout_height="@dimen/x160"><br><br></button></framelayout>
+
+<p>可以看到我们的宽度和高度定义为x160，其实就是宽度的50%；<br>那么效果图：</p>
+<p>可以看到不论在什么分辨率的机型，我们的按钮的宽和高始终是屏幕宽度的一半。</p>
+<p>对于设计图<br>假设现在的UI的设计图是按照480*320设计的，且上面的宽和高的标识都是px的值，你可以直接将px转化为x[1-320]，y[1-480]，这样写出的布局基本就可以全分辨率适配了。</p>
+<p>你可能会问：设计师设计图的分辨率不固定怎么办？下文会说~</p>
+<p>对于上文提出的几个dp做不到的<br>你可以通过在引入百分比后，自己试试~~</p>
+<p>好了，有个最主要的问题，我们没有说，就是分辨率这么多，尼玛难道我们要自己计算，然后手写？</p>
+<p>2、自动生成工具</p>
+<p>好了，其实这样的文件夹手写也可以，按照你们需要支持的分辨率，然后编写一套，以后一直使用。</p>
+<p>当然了，作为程序员的我们，怎么能做这么low的工作，肯定要程序来实现：</p>
+<p>那么实现需要以下步骤：</p>
+<p>分析需要的支持的分辨率<br>对于主流的分辨率我已经集成到了我们的程序中，当然对于特殊的，你可以通过参数指定。关于屏幕分辨率信息，可以通过该网站查询：<a href="http://screensiz.es/phone" target="_blank" rel="external">http://screensiz.es/phone</a><br>编写自动生成文件的程序<br>代码如下</p>
+<pre><code>import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+/**
+    * Created by zhy on 15/5/3.
+    */
+  public class GenerateValueFiles {
+
+private int baseW;
+private int baseH;
+
+private String dirStr = &quot;./res&quot;;
+
+private final static String WTemplate = &quot;&lt;dimen name=\&quot;x{0}\&quot;&gt;{1}px&lt;/dimen&gt;\n&quot;;
+private final static String HTemplate = &quot;&lt;dimen name=\&quot;y{0}\&quot;&gt;{1}px&lt;/dimen&gt;\n&quot;;
+
+/**
+ * {0}-HEIGHT
+ */
+private final static String VALUE_TEMPLATE = &quot;values-{0}x{1}&quot;;
+
+private static final String SUPPORT_DIMESION = &quot;320,480;480,800;480,854;540,960;600,1024;720,1184;720,1196;720,1280;768,1024;800,1280;1080,1812;1080,1920;1440,2560;&quot;;
+
+private String supportStr = SUPPORT_DIMESION;
+
+public GenerateValueFiles(int baseX, int baseY, String supportStr) {
+    this.baseW = baseX;
+    this.baseH = baseY;
+
+    if (!this.supportStr.contains(baseX + &quot;,&quot; + baseY)) {
+        this.supportStr += baseX + &quot;,&quot; + baseY + &quot;;&quot;;
+    }
+
+    this.supportStr += validateInput(supportStr);
+
+    System.out.println(supportStr);
+
+    File dir = new File(dirStr);
+    if (!dir.exists()) {
+        dir.mkdir();
+
+    }
+    System.out.println(dir.getAbsoluteFile());
+
+}
+
+/**
+ * @param supportStr
+ *            w,h_...w,h;
+ * @return
+ */
+private String validateInput(String supportStr) {
+    StringBuffer sb = new StringBuffer();
+    String[] vals = supportStr.split(&quot;_&quot;);
+    int w = -1;
+    int h = -1;
+    String[] wh;
+    for (String val : vals) {
+        try {
+            if (val == null || val.trim().length() == 0)
+                continue;
+
+            wh = val.split(&quot;,&quot;);
+            w = Integer.parseInt(wh[0]);
+            h = Integer.parseInt(wh[1]);
+        } catch (Exception e) {
+            System.out.println(&quot;skip invalidate params : w,h = &quot; + val);
+            continue;
+        }
+        sb.append(w + &quot;,&quot; + h + &quot;;&quot;);
+    }
+
+    return sb.toString();
+}
+
+public void generate() {
+    String[] vals = supportStr.split(&quot;;&quot;);
+    for (String val : vals) {
+        String[] wh = val.split(&quot;,&quot;);
+        generateXmlFile(Integer.parseInt(wh[0]), Integer.parseInt(wh[1]));
+    }
+
+}
+
+private void generateXmlFile(int w, int h) {
+
+    StringBuffer sbForWidth = new StringBuffer();
+    sbForWidth.append(&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;utf-8\&quot;?&gt;\n&quot;);
+    sbForWidth.append(&quot;&lt;resources&gt;&quot;);
+    float cellw = w * 1.0f / baseW;
+
+    System.out.println(&quot;width : &quot; + w + &quot;,&quot; + baseW + &quot;,&quot; + cellw);
+    for (int i = 1; i &lt; baseW; i++) {
+        sbForWidth.append(WTemplate.replace(&quot;{0}&quot;, i + &quot;&quot;).replace(&quot;{1}&quot;,
+                change(cellw * i) + &quot;&quot;));
+    }
+    sbForWidth.append(WTemplate.replace(&quot;{0}&quot;, baseW + &quot;&quot;).replace(&quot;{1}&quot;,
+            w + &quot;&quot;));
+    sbForWidth.append(&quot;&lt;/resources&gt;&quot;);
+
+    StringBuffer sbForHeight = new StringBuffer();
+    sbForHeight.append(&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;utf-8\&quot;?&gt;\n&quot;);
+    sbForHeight.append(&quot;&lt;resources&gt;&quot;);
+    float cellh = h *1.0f/ baseH;
+    System.out.println(&quot;height : &quot;+ h + &quot;,&quot; + baseH + &quot;,&quot; + cellh);
+    for (int i = 1; i &lt; baseH; i++) {
+        sbForHeight.append(HTemplate.replace(&quot;{0}&quot;, i + &quot;&quot;).replace(&quot;{1}&quot;,
+                change(cellh * i) + &quot;&quot;));
+    }
+    sbForHeight.append(HTemplate.replace(&quot;{0}&quot;, baseH + &quot;&quot;).replace(&quot;{1}&quot;,
+            h + &quot;&quot;));
+    sbForHeight.append(&quot;&lt;/resources&gt;&quot;);
+
+    File fileDir = new File(dirStr + File.separator
+            + VALUE_TEMPLATE.replace(&quot;{0}&quot;, h + &quot;&quot;)//
+                    .replace(&quot;{1}&quot;, w + &quot;&quot;));
+    fileDir.mkdir();
+
+    File layxFile = new File(fileDir.getAbsolutePath(), &quot;lay_x.xml&quot;);
+    File layyFile = new File(fileDir.getAbsolutePath(), &quot;lay_y.xml&quot;);
+    try {
+        PrintWriter pw = new PrintWriter(new FileOutputStream(layxFile));
+        pw.print(sbForWidth.toString());
+        pw.close();
+        pw = new PrintWriter(new FileOutputStream(layyFile));
+        pw.print(sbForHeight.toString());
+        pw.close();
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    }
+}
+
+public static float change(float a) {
+    int temp = (int) (a * 100);
+    return temp / 100f;
+}
+
+public static void main(String[] args) {
+    int baseW = 320;
+    int baseH = 400;
+    String addition = &quot;&quot;;
+    try {
+        if (args.length &gt;= 3) {
+            baseW = Integer.parseInt(args[0]);
+            baseH = Integer.parseInt(args[1]);
+            addition = args[2];
+        } else if (args.length &gt;= 2) {
+            baseW = Integer.parseInt(args[0]);
+            baseH = Integer.parseInt(args[1]);
+        } else if (args.length &gt;= 1) {
+            addition = args[0];
+        }
+    } catch (NumberFormatException e) {
+
+        System.err
+                .println(&quot;right input params : java -jar xxx.jar width height w,h_w,h_..._w,h;&quot;);
+        e.printStackTrace();
+        System.exit(-1);
+    }
+
+    new GenerateValueFiles(baseW, baseH, addition).generate();
+  }
+
+}
+</code></pre><p>同时原作者提供了jar包，默认情况下，双击即可生成，使用说明：</p>
+<p>下载地址见文末，内置了常用的分辨率，默认基准为480*320，当然对于特殊需求，通过命令行指定即可：</p>
+<p>例如：基准 1280 <em> 800 ，额外支持尺寸：1152 </em> 735；4500 * 3200；</p>
+<p>按照</p>
+<p>Java -jar xx.jar width height width,height_width,height<br>上述格式即可。</p>
+<p>到此，通过编写一个工具，根据某基准尺寸，生成所有需要适配分辨率的values文件，做到了编写布局文件时，可以参考屏幕的分辨率；在UI给出的设计图，可以快速的按照其标识的px单位进行编写布局。基本解决了适配的问题。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/07/http协议（转载）/" rel="next" title="http协议（转载）">
+                <i class="fa fa-chevron-left"></i> http协议（转载）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="fooling dutchman" />
+          <p class="site-author-name" itemprop="name">fooling dutchman</p>
+          <p class="site-description motion-element" itemprop="description">骐骥一跃，不能十步， 驽马十驾，功在不舍。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fooling dutchman</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
