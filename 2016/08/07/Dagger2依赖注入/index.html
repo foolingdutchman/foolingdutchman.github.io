@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="LeakCanary, 内存泄露," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -84,19 +84,21 @@
 
 
 
-<meta name="description" content="几乎每个程序员在开发的过程中都会遇到内存泄漏，那么我们如何检测到app是否哪里出现内存泄漏呢？square公司推出了一款简单粗暴的检测内存泄漏的工具－－ LeakCanary">
+<meta name="description" content="原文链接 : Tasting Dagger 2 on Android 原文作者 : Fernando Cejas
+#为什么使用依赖注入首先我们需要知道，人们在很长的一段时间里都是利用控制反转原则规定：应用程序的流程取决于在程序运行时对象图的建立。通过抽象定义的对象交互可以实现这样的动态流程。而使用依赖注入技术或者服务定位器便可以完成运行时绑定。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="简单强大的Android内存泄漏检测工具 LeakCanary">
-<meta property="og:url" content="http://yoursite.com/2016/08/07/简单强大的Android内存泄漏检测工具-LeakCanary/index.html">
+<meta property="og:title" content="Dagger2依赖注入">
+<meta property="og:url" content="http://yoursite.com/2016/08/07/Dagger2依赖注入/index.html">
 <meta property="og:site_name" content="fooling dutchman的博客">
-<meta property="og:description" content="几乎每个程序员在开发的过程中都会遇到内存泄漏，那么我们如何检测到app是否哪里出现内存泄漏呢？square公司推出了一款简单粗暴的检测内存泄漏的工具－－ LeakCanary">
-<meta property="og:image" content="http://static.open-open.com/lib/uploadImg/20151221/20151221115113_804.png">
-<meta property="og:image" content="http://static.open-open.com/lib/uploadImg/20151221/20151221115136_192.png">
-<meta property="og:updated_time" content="2016-08-07T11:20:29.000Z">
+<meta property="og:description" content="原文链接 : Tasting Dagger 2 on Android 原文作者 : Fernando Cejas
+#为什么使用依赖注入首先我们需要知道，人们在很长的一段时间里都是利用控制反转原则规定：应用程序的流程取决于在程序运行时对象图的建立。通过抽象定义的对象交互可以实现这样的动态流程。而使用依赖注入技术或者服务定位器便可以完成运行时绑定。">
+<meta property="og:image" content="http://www.jcodecraeer.com/uploads/20150519/1431999088123888.png">
+<meta property="og:updated_time" content="2016-08-07T14:37:38.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="简单强大的Android内存泄漏检测工具 LeakCanary">
-<meta name="twitter:description" content="几乎每个程序员在开发的过程中都会遇到内存泄漏，那么我们如何检测到app是否哪里出现内存泄漏呢？square公司推出了一款简单粗暴的检测内存泄漏的工具－－ LeakCanary">
-<meta name="twitter:image" content="http://static.open-open.com/lib/uploadImg/20151221/20151221115113_804.png">
+<meta name="twitter:title" content="Dagger2依赖注入">
+<meta name="twitter:description" content="原文链接 : Tasting Dagger 2 on Android 原文作者 : Fernando Cejas
+#为什么使用依赖注入首先我们需要知道，人们在很长的一段时间里都是利用控制反转原则规定：应用程序的流程取决于在程序运行时对象图的建立。通过抽象定义的对象交互可以实现这样的动态流程。而使用依赖注入技术或者服务定位器便可以完成运行时绑定。">
+<meta name="twitter:image" content="http://www.jcodecraeer.com/uploads/20150519/1431999088123888.png">
 
 
 
@@ -117,9 +119,9 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/08/07/简单强大的Android内存泄漏检测工具-LeakCanary/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/08/07/Dagger2依赖注入/"/>
 
-  <title> 简单强大的Android内存泄漏检测工具 LeakCanary | fooling dutchman的博客 </title>
+  <title> Dagger2依赖注入 | fooling dutchman的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -239,7 +241,7 @@
             
             
               
-                简单强大的Android内存泄漏检测工具 LeakCanary
+                Dagger2依赖注入
               
             
           </h1>
@@ -251,7 +253,7 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-07T17:35:24+08:00" content="2016-08-07">
+            <time itemprop="dateCreated" datetime="2016-08-07T22:36:09+08:00" content="2016-08-07">
               2016-08-07
             </time>
           </span>
@@ -279,33 +281,41 @@
       
 
       
-        <p>几乎每个程序员在开发的过程中都会遇到内存泄漏，那么我们如何检测到app是否哪里出现内存泄漏呢？square公司推出了一款简单粗暴的检测内存泄漏的工具－－ LeakCanary<br><a id="more"></a><br><strong>什么是内存泄漏？</strong><br> 内存泄漏是指由于疏忽或者错误造成程序未能释放已经不再使用的内存，内存泄漏不是指内存在物理上的消失，而是应用程序分配某段内存后，由于设计错误失去了对于这段内存的控制，因而造成内存的浪费。</p>
-<p>内存泄漏和内存溢出是两码事，不要混淆，内存溢出通俗的讲就是内存不够用,现在的只能手机内存越来越大,内存溢出的情况不是很多,但是内存泄露情况比较严重,LeakCanary的到来对我们来说是一个简单粗暴,直观的好工具<br><img src="http://static.open-open.com/lib/uploadImg/20151221/20151221115113_804.png" alt="enter image description here"></p>
-<p>上面这个图片就是这个工具的图标了,当你的程序处于debug模式的时候,就能看到他了,当然release没有</p>
-<p>LeakCanary作为一个简单粗暴的工具,用法也相当简单</p>
-<p>在build.gradle中引入LeakCanary</p>
-<pre><code>debugCompile &apos;com.squareup.leakcanary:leakcanary-android:1.3&apos;  
-    releaseCompile &apos;com.squareup.leakcanary:leakcanary-android-no-op:1.3&apos;  
-</code></pre><p>一个是debug包,一个是release包的,从引入包的结构也能看出端倪<br>由于LeakCanary是测试整个app的内存泄露情况,所以你需要在你的application中启动它</p>
-<pre><code>package com.zimo.guo;  
-
-import android.app.Application;  
-
-import com.squareup.leakcanary.LeakCanary;  
-
-/** 
- * Created by zimo on 15/8/7. 
- */  
-public class MyApplication extends Application {  
-
-    @Override  
-    public void onCreate() {  
-        super.onCreate();  
-        LeakCanary.install(this);  
-    }  
-}  
-</code></pre><p>ok,现在就可以测试程序中的内存泄露情况,直观明了<br><img src="http://static.open-open.com/lib/uploadImg/20151221/20151221115136_192.png" alt="enter image description here"></p>
-<p>这么有逼格的工具,赶紧来试试吧,要想使你的app的内存泄露灰飞烟灭,try it</p>
+        <p>原文链接 : <a href="http://fernandocejas.com/2015/04/11/tasting-dagger-2-on-android/" target="_blank" rel="external">Tasting Dagger 2 on Android </a><br>原文作者 : Fernando Cejas</p>
+<p>#为什么使用依赖注入<br>首先我们需要知道，人们在很长的一段时间里都是利用控制反转原则规定：应用程序的流程取决于在程序运行时对象图的建立。通过抽象定义的对象交互可以实现这样的动态流程。而使用依赖注入技术或者服务定位器便可以完成运行时绑定。<br><a id="more"></a><br><strong>使用依赖注入可以带来以下好处：</strong></p>
+<p>依赖的注入和配置独立于组件之外。<br>因为对象是在一个独立、不耦合的地方初始化，所以当注入抽象方法的时候，我们只需要修改对象的实现方法，而不用大改代码库。<br>依赖可以注入到一个组件中：我们可以注入这些依赖的模拟实现，这样使得测试更加简单。<br>可以看到，能够管理创建实例的范围是一件非常棒的事情。按我的观点，你app中的所有对象或者协作者都不应该知道有关实例创建和生命周期的任何事情，这些都应该由我们的依赖注入框架管理的。</p>
+<p><img src="http://www.jcodecraeer.com/uploads/20150519/1431999088123888.png" alt="enter image description here"></p>
+<p><strong>什么是JSR-330？</strong><br>为了最大程度的提高代码的复用性、测试性和维护性，java的依赖注入为注入类中的使用定义了一整套注解（和接口）标准。Dagger1和Dagger2（还有Guice）都是基于这套标准，给程序带来了稳定性和标准的依赖注入方法。</p>
+<p><strong>Dagger1</strong><br>这个版本不是这篇文章的重点，所以我只是简略地说一下。不管怎样，Dagger1还是做了很多的贡献，可以说是如今Android上最流行的依赖注入框架。它是由Square公司受到Guice启发创建的。</p>
+<p>基本特点：</p>
+<ul>
+<li>多个注入点：依赖，通过injected</li>
+<li>多种绑定方法：依赖，通过provided</li>
+<li>多个modules：实现某种功能的绑定集合</li>
+<li>多个对象图： 实现一个范围的modules集合<br>Dagger1是在编译的时候实行绑定，不过也用到了反射机制。但这个反射不是用来实例化对象的，而是用于图的构成。Dagger会在运行的时候去检测是否一切都正常工作，所以使用的时候会付出一些代价：偶尔会无效和调试困难。</li>
+</ul>
+<p><strong>Dagger2</strong><br>Dagger2是Dagger1的分支，由谷歌公司接手开发，目前的版本是2.0。Dagger2是受到AutoValue项目的启发。 刚开始，Dagger2解决问题的基本思想是：利用生成和写的代码混合达到看似所有的产生和提供依赖的代码都是手写的样子。</p>
+<p>如果我们将Dagger2和1比较，他们两个在很多方面都非常相似，但也有很重要的区别，如下：</p>
+<ul>
+<li>再也没有使用反射：图的验证、配置和预先设置都在编译的时候执行。</li>
+<li>容易调试和可跟踪：完全具体地调用提供和创建的堆栈</li>
+<li>更好的性能：谷歌声称他们提高了13%的处理性能</li>
+<li>代码混淆：使用派遣方法，就如同自己写的代码一样<br>当然所有这些很棒的特点都需要付出一个代价，那就是缺乏灵活性，例如：Dagger2没用反射所以没有动态机制。</li>
+</ul>
+<p><strong>深入研究</strong><br>想要了解Dagger2，就必须要知道依赖注入的基础和这其中的每一个概念：</p>
+<ul>
+<li>@Inject: 通常在需要依赖的地方使用这个注解。换句话说，你用它告诉Dagger这个类或者字段需要依赖注入。这样，Dagger就会构造一个这个类的实例并满足他们的依赖。</li>
+<li>@Module: Modules类里面的方法专门提供依赖，所以我们定义一个类，用@Module注解，这样Dagger在构造类的实例的时候，就知道从哪里去找到需要的 依赖。modules的一个重要特征是它们设计为分区并组合在一起（比如说，在我们的app中可以有多个组成在一起的modules）。</li>
+<li>@Provide: 在modules中，我们定义的方法是用这个注解，以此来告诉Dagger我们想要构造对象并提供这些依赖。</li>
+<li>@Component: Components从根本上来说就是一个注入器，也可以说是@Inject和@Module的桥梁，它的主要作用就是连接这两个部分。 Components可以提供所有定义了的类型的实例，比如：我们必须用@Component注解一个接口然后列出所有的@Modules组成该组件，如 果缺失了任何一块都会在编译的时候报错。所有的组件都可以通过它的modules知道依赖的范围。</li>
+<li>@Scope: Scopes可是非常的有用，Dagger2可以通过自定义注解限定注解作用域。后面会演示一个例子，这是一个非常强大的特点，因为就如前面说的一样，没 必要让每个对象都去了解如何管理他们的实例。在scope的例子中，我们用自定义的@PerActivity注解一个类，所以这个对象存活时间就和 activity的一样。简单来说就是我们可以定义所有范围的粒度(@PerFragment, @PerUser, 等等)。</li>
+<li>Qualifier: 当类的类型不足以鉴别一个依赖的时候，我们就可以使用这个注解标示。例如：在Android中，我们会需要不同类型的context，所以我们就可以定义 qualifier注解“@ForApplication”和“@ForActivity”，这样当注入一个context的时候，我们就可以告诉 Dagger我们想要哪种类型的context。<br><strong>不废话上代码</strong><br>前面已经讲了很多理论了，所以接下来让我们看看如何使用Dagger2。首先还是要在我们的build.gradle文件中如下配置：</li>
+</ul>
+<p>apply plugin: ‘com.neenbedankt.android-apt’<br>buildscript {<br>repositories {<br>jcenter()<br>}<br>dependencies {<br>classpath ‘com.neenbedankt.gradle.plugins:android-apt:1.4’<br>}<br>} </p>
+<p>android {<br>…<br>} </p>
+<p>dependencies {<br>apt ‘com.google.dagger:dagger-compiler:2.0’<br>compile ‘com.google.dagger:dagger:2.0’</p>
+<p>…<br>}   </p>
+<p>如上所示，我们添加了编译和运行库，还有必不可少的apt插件，没有这插件，dagger可能不会正常工作，特别是在Android studio中。</p>
 
       
     </div>
@@ -326,28 +336,18 @@ public class MyApplication extends Application {
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/LeakCanary-内存泄露/" rel="tag">#LeakCanary, 内存泄露</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/08/07/关于android-OOM-常用解决方案/" rel="next" title="关于android OOM 常用解决方案">
-                <i class="fa fa-chevron-left"></i> 关于android OOM 常用解决方案
+              <a href="/2016/08/07/RXjava简单使用/" rel="next" title="RXjava简单使用">
+                <i class="fa fa-chevron-left"></i> RXjava简单使用
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/07/http协议（转载）/" rel="prev" title="http协议（转载）">
-                http协议（转载） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
