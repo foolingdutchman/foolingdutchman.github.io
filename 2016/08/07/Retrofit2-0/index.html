@@ -1,0 +1,602 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Retrofit终于迎来了2.0版本，也修复了老版本的一些bug，这是修复日志，各位可以自己去看，https://github.com/square/retrofit/blob/master/CHANGELOG.md 
+1.使用retrofit，需要下载一些jar包
+retrofit gitHub项目地址:https://github.com/square/retrofitretrofit 官网地">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Retrofit2.0">
+<meta property="og:url" content="http://yoursite.com/2016/08/07/Retrofit2-0/index.html">
+<meta property="og:site_name" content="fooling dutchman的博客">
+<meta property="og:description" content="Retrofit终于迎来了2.0版本，也修复了老版本的一些bug，这是修复日志，各位可以自己去看，https://github.com/square/retrofit/blob/master/CHANGELOG.md 
+1.使用retrofit，需要下载一些jar包
+retrofit gitHub项目地址:https://github.com/square/retrofitretrofit 官网地">
+<meta property="og:image" content="http://img.blog.csdn.net/20151106160717610">
+<meta property="og:updated_time" content="2016-08-07T15:00:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Retrofit2.0">
+<meta name="twitter:description" content="Retrofit终于迎来了2.0版本，也修复了老版本的一些bug，这是修复日志，各位可以自己去看，https://github.com/square/retrofit/blob/master/CHANGELOG.md 
+1.使用retrofit，需要下载一些jar包
+retrofit gitHub项目地址:https://github.com/square/retrofitretrofit 官网地">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20151106160717610">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/08/07/Retrofit2-0/"/>
+
+  <title> Retrofit2.0 | fooling dutchman的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">fooling dutchman的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Retrofit2.0
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-07T23:00:07+08:00" content="2016-08-07">
+              2016-08-07
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Retrofit终于迎来了2.0版本，也修复了老版本的一些bug，这是修复日志，各位可以自己去看，<a href="https://github.com/square/retrofit/blob/master/CHANGELOG.md" target="_blank" rel="external">https://github.com/square/retrofit/blob/master/CHANGELOG.md</a> </p>
+<p><strong>1.使用retrofit，需要下载一些jar包</strong></p>
+<p>retrofit gitHub项目地址:<a href="https://github.com/square/retrofit" target="_blank" rel="external">https://github.com/square/retrofit</a><br>retrofit 官网地址：<a href="http://square.github.io/retrofit/" target="_blank" rel="external">http://square.github.io/retrofit/</a><br>okHttp gitHub项目地址:<a href="https://github.com/square/okhttp" target="_blank" rel="external">https://github.com/square/okhttp</a><br>okHttp 官网地址：<a href="http://square.github.io/okhttp/" target="_blank" rel="external">http://square.github.io/okhttp/</a><br>okio gitHub项目地址：<a href="https://github.com/square/okio" target="_blank" rel="external">https://github.com/square/okio</a><br>其实还需要以下jar包<br>1.gson的jar包 gson-2.4.jar<br>2.解析gson的转化jar包 onverter-gson-2.0.0-beta2_.jar<br>3.okhttp-urlconnection-2.5.0.jar<br>4.httpmime-4.5.jar</p>
+<p><strong>2.介绍这些jar包的作用</strong></p>
+<p>在1.x版本的retrofit框架：<br>只需要Retrofit包和gson-2.4.jar包就行了，那时的Retrofit默认是使用okhttp jar包来网络请求的，没有的话就使用自己所带的网络请求，解析默认是gson解析的，所以我们需要添加gson包。但是如果你要使用okhttp来请求的话，必须要添加okhttp-2.5.0.jar、okio-1.6.0.jar、okhttp-urlconnection-2.5.0.jar这三个包。 </p>
+<ul>
+<li>(1) okhttp-2.5.0.jar：okhttp主要的网络请求代码都在里面 </li>
+<li>(2) okio-1.6.0.jar：okhttp 所需要的依赖包 </li>
+<li>(3) okhttp-urlconnection-2.5.0.jar：连接okhttp和retrofit的桥梁，但是在retrofit2.0后，可以不添加这个包，也可以使用okhttp请求了。</li>
+</ul>
+<p>在2.0版本的retrofit框架：<br>我现在所用的是retrofit-2.0.0-beta2.jar ，目前的最新版本。发现retrofit改变的挺大。 </p>
+<ul>
+<li>(1)retrofit必须使用okhttp请求了，如果项目中没有okhttp的依赖的话，肯定会出错 </li>
+<li>(2)请求返回的解析不是默认的Gson解析了，需要我们手动去指定。    </li>
+</ul>
+<p>Retrofit retrofit = new Retrofit.Builder()<br>.baseUrl(“<a href="http://apis.baidu.com/showapi_open_bus/showapi_joke/" target="_blank" rel="external">http://apis.baidu.com/showapi_open_bus/showapi_joke/</a>“)<br>.addConverterFactory(GsonConverterFactory.create())<br>.build();</p>
+<p>这个就是Gson解析了，GsonConverterFactory是需要下载的jar。<br><img src="http://img.blog.csdn.net/20151106160717610" alt="enter image description here"><br>这里写图片描述<br>加上converter-gson-2.0.0-beta2_.jar包之后，还是需要gson-2.4.jar这个包的，没有的话还是解析不了的 </p>
+<ul>
+<li>(3)okhttp-urlconnection-2.5.0.jar，我发现在retrofit2.0之后不加也是可以的，但是奇怪的是square公司还是一直在更新这个jar(最新是2015.09)。httpmime-4.5.jar是Apache公司的，用来加快网络请求效率的，搜了网上的一些文章，说这2个jar是用来让网络更快的，我水平有限，深入不了retrofit和okhttp的源码理解，各位加上还是不加都是可以请求的，随意啦~</li>
+</ul>
+<p><strong>3.Retrofit的请求</strong></p>
+<p>还是和以前一样，通过接口的映射来请求，但是更改了一些请求方式。<br>以前是：</p>
+<p>RestAdapter retrofit = new RestAdapter.Builder()<br>.setEndpoint(请求地址)<br>.setLogLevel(LogLevel.FULL)<br>//          .setConverter(new GsonConverter(new Gson()))<br>//          .setClient(new OkClient(new OkHttpClient()))<br>//          .setErrorHandler(new RetrofitErrorHandler())<br>//          .setRequestInterceptor(requestInterceptor)<br>.build();<br>GitHubService service = retrofit.create(GitHubService.class);<br>返回实体 result = service.请求的接口名称(请求参数);<br>现在是：</p>
+<p>Retrofit retrofit = new Retrofit.Builder()<br>.baseUrl(请求地址)<br>.addConverterFactory(GsonConverterFactory.create())<br>.build();<br>GitHubService service = retrofit.create(GitHubService.class);<br>retrofit.Call&lt;返回实体&gt; repos = service.请求的接口名称(请求参数);<br>repos.enqueue(new retrofit.Callback&lt;返回实体&gt;() {</p>
+<p>@Override<br>public void onResponse(retrofit.Response&lt;返回实体&gt; response, Retrofit retrofit) {<br>返回实体 body = response.body();<br>LogUtil.i(TAG, body.toString());</p>
+<p>}</p>
+<p>@Override<br>public void onFailure(Throwable throwable) {<br>// TODO Auto-generated method stub</p>
+<p>}<br>});</p>
+<p><strong>4.删除一些类</strong></p>
+<p>（1）RequestInterceptor类<br>2.0中retrofit的请求拦截类被删除了，现在直接用的okhttp的请求拦截类</p>
+<p>OkHttpClient client = new OkHttpClient();<br>client.interceptors().add(new Interceptor() {<br>@Override<br>public Response intercept(Chain chain) throws IOException {<br>Response response = chain.proceed(chain.request());<br>// Do anything with response here<br>return response;<br>}<br>});<br>// 然后传递创建的client到Retrofit的Builder链中。<br>Retrofit retrofit = new Retrofit.Builder()<br>.baseUrl(请求地址)<br>.addConverterFactory(GsonConverterFactory.create())<br>.client(client)<br>.build();</p>
+<p>（2）删除ErrorHandler接口和RetrofitError类<br>没有错误的提示了，同意集中在 callback的onFailure(Throwable throwable)的异常错误中了。</p>
+<p><strong>5.同步请求和异步请求方式改变</strong></p>
+<p>以前是：</p>
+<p>//在接口映射中<br>public interface GitHubService{<br>//同步请求<br>@POST(“joke_text”)<br>返回实体 请求接口名称(请求参数);</p>
+<p>//异步请求<br>@POST(“joke_text”)<br>void 请求接口名称(Callback&lt;返回实体&gt; cb);<br>}</p>
+<p>2.0现在是：</p>
+<p>// 同步请求<br>Call&lt;返回实体&gt; call = service.请求接口名称();<br>返回实体 repo = call.execute();</p>
+<p>// 异步请求<br>Call&lt;返回实体&gt; call = service.请求接口名称();<br>call.enqueue(new Callback&lt;返回实体&gt;() {<br>@Override<br>public void onResponse(Response&lt;返回实体&gt; response, Retrofit retrofit) {<br>// Get result bean from response.body()<br>}</p>
+<p>@Override<br>public void onFailure(Throwable t) {</p>
+<p>}<br>});</p>
+<p><strong>6.Url的重新定义</strong></p>
+<p>这个里面的介绍比较详细 : <a href="http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0915/3460.html" target="_blank" rel="external">http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0915/3460.html</a><br>这篇文章写的比较好，可以参考一下。</p>
+<p>7.总结</p>
+<p>搞了这么多，终于可以使用retrofit+okhttp+gson超级网络请求框架了，网上说目前这个是最快的网络请求，比google的volley还快点，至于真假，就不知道了，但是不可否认，确实挺好用的，效率也是杠杠的。<br>就单独的来说，OkHttp的网络请求也是很好用的，推荐文章鸿神的<a href="http://blog.csdn.net/lmj623565791/article/details/47911083" target="_blank" rel="external">http://blog.csdn.net/lmj623565791/article/details/47911083</a><br>可惜单独的Retrofit不能网络请求了，感觉这是2.0最不爽的地方了。当然组合使用应该是更爽的吧。</p>
+<p>所有最新依赖包下载：<a href="http://download.csdn.net/detail/u012301841/9248139" target="_blank" rel="external">http://download.csdn.net/detail/u012301841/9248139</a> </p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/07/Dagger2依赖注入/" rel="next" title="Dagger2依赖注入">
+                <i class="fa fa-chevron-left"></i> Dagger2依赖注入
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="fooling dutchman" />
+          <p class="site-author-name" itemprop="name">fooling dutchman</p>
+          <p class="site-description motion-element" itemprop="description">骐骥一跃，不能十步， 驽马十驾，功在不舍。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fooling dutchman</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
