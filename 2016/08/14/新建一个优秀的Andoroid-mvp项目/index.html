@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="RXjava,响应式," />
+  <meta name="keywords" content="MVP,开发模式,Android项目," />
 
 
 
@@ -84,19 +84,52 @@
 
 
 
-<meta name="description" content="一、什么是 RxJava？
-RxJava 是一个响应式编程框架，采用观察者设计模式。所以自然少不了 Observable 和 Subscriber 这两个东东了。">
+<meta name="description" content="1.项目结构
+如果项目比较小的话：
+
+app——Application Activity Fragment Presenter等的顶级父类
+config——API,常量表等
+model——数据层
+entities——数据模型
+presenter——MVP的P
+service——服务
+ui——MVP的V
+utils——工具类集合
+widget——各个可复用View集合">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RXjava简单使用">
-<meta property="og:url" content="http://yoursite.com/2016/08/07/RXjava简单使用/index.html">
+<meta property="og:title" content="新建一个优秀的Android mvp项目">
+<meta property="og:url" content="http://yoursite.com/2016/08/14/新建一个优秀的Andoroid-mvp项目/index.html">
 <meta property="og:site_name" content="小何同学的博客">
-<meta property="og:description" content="一、什么是 RxJava？
-RxJava 是一个响应式编程框架，采用观察者设计模式。所以自然少不了 Observable 和 Subscriber 这两个东东了。">
-<meta property="og:updated_time" content="2016-08-13T07:08:36.000Z">
+<meta property="og:description" content="1.项目结构
+如果项目比较小的话：
+
+app——Application Activity Fragment Presenter等的顶级父类
+config——API,常量表等
+model——数据层
+entities——数据模型
+presenter——MVP的P
+service——服务
+ui——MVP的V
+utils——工具类集合
+widget——各个可复用View集合">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/680540-b1d797b5545bbfe2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/680540-e9681cea2ffba812.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2016-08-14T06:07:38.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="RXjava简单使用">
-<meta name="twitter:description" content="一、什么是 RxJava？
-RxJava 是一个响应式编程框架，采用观察者设计模式。所以自然少不了 Observable 和 Subscriber 这两个东东了。">
+<meta name="twitter:title" content="新建一个优秀的Android mvp项目">
+<meta name="twitter:description" content="1.项目结构
+如果项目比较小的话：
+
+app——Application Activity Fragment Presenter等的顶级父类
+config——API,常量表等
+model——数据层
+entities——数据模型
+presenter——MVP的P
+service——服务
+ui——MVP的V
+utils——工具类集合
+widget——各个可复用View集合">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/680540-b1d797b5545bbfe2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -117,9 +150,9 @@ RxJava 是一个响应式编程框架，采用观察者设计模式。所以自�
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/08/07/RXjava简单使用/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/08/14/新建一个优秀的Andoroid-mvp项目/"/>
 
-  <title> RXjava简单使用 | 小何同学的博客 </title>
+  <title> 新建一个优秀的Android mvp项目 | 小何同学的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -269,7 +302,7 @@ RxJava 是一个响应式编程框架，采用观察者设计模式。所以自�
             
             
               
-                RXjava简单使用
+                新建一个优秀的Android mvp项目
               
             
           </h1>
@@ -281,8 +314,8 @@ RxJava 是一个响应式编程框架，采用观察者设计模式。所以自�
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-07T22:17:52+08:00" content="2016-08-07">
-              2016-08-07
+            <time itemprop="dateCreated" datetime="2016-08-14T14:03:22+08:00" content="2016-08-14">
+              2016-08-14
             </time>
           </span>
 
@@ -295,8 +328,8 @@ RxJava 是一个响应式编程框架，采用观察者设计模式。所以自�
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Android开发/" itemprop="url" rel="index">
-                    <span itemprop="name">Android开发</span>
+                  <a href="/categories/架构/" itemprop="url" rel="index">
+                    <span itemprop="name">架构</span>
                   </a>
                 </span>
 
@@ -311,8 +344,8 @@ RxJava 是一个响应式编程框架，采用观察者设计模式。所以自�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/08/07/RXjava简单使用/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/07/RXjava简单使用/" itemprop="commentsCount"></span>
+                <a href="/2016/08/14/新建一个优秀的Andoroid-mvp项目/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/14/新建一个优秀的Andoroid-mvp项目/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -335,60 +368,131 @@ RxJava 是一个响应式编程框架，采用观察者设计模式。所以自�
       
 
       
-        <p>一、什么是 RxJava？</p>
-<p>RxJava 是一个响应式编程框架，采用观察者设计模式。所以自然少不了 Observable 和 Subscriber 这两个东东了。</p>
+        <p><strong>1.项目结构</strong></p>
+<p>如果项目比较小的话：</p>
+<ul>
+<li>app——Application Activity Fragment Presenter等的顶级父类</li>
+<li>config——API,常量表等</li>
+<li>model——数据层</li>
+<li>entities——数据模型</li>
+<li>presenter——MVP的P</li>
+<li>service——服务</li>
+<li>ui——MVP的V</li>
+<li>utils——工具类集合</li>
+<li><p>widget——各个可复用View集合</p>
 <a id="more"></a>
-<p>RxJava 是一个开源项目，地址：<a href="https://github.com/ReactiveX/RxJava" target="_blank" rel="external">https://github.com/ReactiveX/RxJava</a></p>
-<p>还有一个RxAndroid，用于 Android 开发，添加了 Android 用的接口。地址：<a href="https://github.com/ReactiveX/RxAndroid" target="_blank" rel="external">https://github.com/ReactiveX/RxAndroid</a></p>
-<p>二、例子</p>
-<p>通过请求openweathermap 的天气查询接口返回天气数据</p>
-<p>1、增加编译依赖</p>
-<p>dependencies {<br>compile fileTree(dir: ‘libs’, include: [‘*.jar’])<br>compile ‘com.android.support:appcompat-v7:22.0.0’<br>compile ‘io.reactivex:rxjava:1.0.9’<br>compile ‘io.reactivex:rxandroid:0.24.0’<br>compile ‘com.squareup.retrofit:retrofit:1.9.0’<br>}<br>retrofit 是一个 restful 请求客户端。详见：<a href="http://square.github.io/retrofit/" target="_blank" rel="external">http://square.github.io/retrofit/</a></p>
-<p>2、服务器接口</p>
-<p>/**</p>
-<ul>
-<li>接口</li>
-<li>Created by Hal on 15/4/26.<br>*/<br>public class ApiManager {</li>
+<p>如果项目比较大，上面的方式一定会造成presenter和view里近百个文件。看瞎眼系列。推荐下列方式：</p>
+</li>
+<li><p>app</p>
+</li>
+<li>config</li>
+<li>model</li>
+<li>entities</li>
 </ul>
-<p>private static final String ENDPOINT = “<a href="http://api.openweathermap.org/data/2.5" target="_blank" rel="external">http://api.openweathermap.org/data/2.5</a>“;</p>
-<p>/**</p>
 <ul>
-<li>服务接口<br>*/<br>private interface ApiManagerService {<br>@GET(“/weather”)<br>WeatherData getWeather(@Query(“q”) String place, @Query(“units”) String units);<br>}</li>
+<li>module——将界面层以功能模块分配包。<ul>
+<li>launch</li>
+<li>main</li>
+<li>account</li>
+<li>news</li>
+<li>music</li>
+<li>……</li>
 </ul>
-<p>private static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(ENDPOINT).setLogLevel(RestAdapter.LogLevel.FULL).build();</p>
-<p>private static final ApiManagerService apiManager = restAdapter.create(ApiManagerService.class);</p>
-<p>/**</p>
+</li>
+</ul>
 <ul>
-<li>将服务接口返回的数据，封装成{@link rx.Observable}</li>
-<li>@param city</li>
-<li>@return<br>*/<br>public static Observable<weatherdata> getWeatherData(final String city) {<br>return Observable.create(new Observable.OnSubscribe<weatherdata>() {<br>@Override<br>public void call(Subscriber&lt;? super WeatherData&gt; subscriber) {<br>//订阅者回调 onNext 和 onCompleted<br>subscriber.onNext(apiManager.getWeather(city, “metric”));<br>subscriber.onCompleted();<br>}<br>}).subscribeOn(Schedulers.io());<br>}<br>}<br>订阅者的回调有三个方法，onNext，onError，onCompleted</weatherdata></weatherdata></li>
+<li>utils</li>
+<li>widget</li>
 </ul>
-<p>3、接口调用</p>
-<p>/**</p>
+<p><strong>2.配置主题</strong><br>对于不遵守Material Design的项目无视这一步。<br>1.先在color.xml中写好需要的颜色：<br><code>&lt;resources&gt;</code><br><code>&lt;color name=&quot;Orange&quot;&gt;#ff5722&lt;/color&gt;</code><br>  <code>&lt;color name=&quot;DeepPurple&quot;&gt;#673AB7&lt;/color&gt;</code><br><code>&lt;color name=&quot;DeepPurple900&quot;&gt;#311B92&lt;/color&gt;</code><br> <code>&lt;color name=&quot;White&quot;&gt;#fff&lt;/color&gt;</code><br>   <code>&lt;color name=&quot;Gray&quot;&gt;#888888&lt;/color&gt;</code><br>   <code>&lt;color name=&quot;Gray100&quot;&gt;#dddddd&lt;/color&gt;</code><br>   <code>&lt;color name=&quot;Gray600&quot;&gt;#999999&lt;/color&gt;</code><br><code>&lt;/resources&gt;</code><br>注意color.xml是配色表。应该是描述颜色而不是对字体颜色，背景颜色等的定义。这样能防止相近的颜色重复定义。而导致界面颜色不统一。</p>
+<p>2.在style.xml里定义主题：</p>
+<p><code>&lt;style name=&quot;AppTheme.Base&quot;</code> <code>parent=&quot;Theme.AppCompat.Light.NoActionBar&quot;&gt;</code><br> <code>&lt;!-- Customize your theme here. --&gt;</code><br><code>&lt;item name=&quot;colorPrimary&quot;&gt;@color/DeepPurple&lt;/item&gt;</code><br><code>&lt;item name=&quot;colorPrimaryDark&quot;&gt;@color/DeepPurple900&lt;/item&gt;</code><br><code>&lt;item name=&quot;colorAccent&quot;&gt;@color/Orange&lt;/item&gt;</code><br><code>&lt;/style&gt;</code><br><code>&lt;style name=&quot;AppTheme&quot; parent=&quot;AppTheme.Base&quot;&gt;&lt;/style&gt;</code><br>在res目录下，创建一个values-v21目录，再创建一个style.xml:</p>
+<p><code>&lt;style name=&quot;AppTheme&quot; parent=&quot;AppTheme.Base&quot;&gt;</code><br>   <code>&lt;item name=&quot;android:windowDrawsSystemBarBackgrounds&quot;&gt;true&lt;/item&gt;</code><br>    <code>&lt;item name=&quot;android:statusBarColor&quot;&gt;?colorPrimaryDark&lt;/item&gt;</code><br><code>&lt;/style&gt;</code><br>然后在AndroidManifest.xml文件中修改application的theme属性为上面定义的AppTheme.即可实现沉浸式状态栏。<br>然后关于Theme与Toolbar的详细设置参考博客：<br><a href="http://www.cnblogs.com/Jude95/p/4369816.html" target="_blank" rel="external">http://www.cnblogs.com/Jude95/p/4369816.html</a><br><a href="http://www.cnblogs.com/Jude95/p/4370176.html" target="_blank" rel="external">http://www.cnblogs.com/Jude95/p/4370176.html</a></p>
+<p><strong>3.依赖库与SDK</strong><br>必选的库:</p>
 <ul>
-<li>多个 city 请求</li>
-<li>map，flatMap 对 Observable进行变换<br><em>/<br>Observable.from(CITIES).flatMap(new Func1<string, observable<weatherdata="">&gt;() {<br>@Override<br>public Observable<weatherdata> call(String s) {<br>return ApiManager.getWeatherData(s);<br>}<br>}).subscribeOn(Schedulers.io())<br>.observeOn(AndroidSchedulers.mainThread())<br>.subscribe(/</weatherdata></string,></em>onNext<em>/new Action1<weatherdata>() {<br>@Override<br>public void call(WeatherData weatherData) {<br>Log.d(LOG_TAG, weatherData.toString());<br>}<br>}, /</weatherdata></em>onError*/new Action1<throwable>() {<br>@Override<br>public void call(Throwable throwable) {</throwable></li>
+<li>gradle-retrolambda——Android的lambda表达式插件</li>
+<li>fresco——Android最屌图片加载库</li>
+<li>material-dialogs ——Material Dialog向下兼容库</li>
+<li>material-ripple——Ripple向下兼容库</li>
+<li>fastjson——最快JSON解析</li>
+<li>butterknife——View注解库和配套插件android-butterknife-zelezny</li>
+<li>ActiveAndroid——数据库注解库。</li>
+<li>RxAndroid——Rx函数响应式编程中文文档</li>
+<li>retrofit,okhttp,sqlbrite,okio——Square家的精品多啊</li>
+<li>compile ‘com.android.support:design:23.0.1’——谷歌Material Design控件库</li>
 </ul>
-<p>}<br>});</p>
-<p>/**</p>
+<p>几个常用库：</p>
 <ul>
-<li>单个 city 请求<br>*/<br>ApiManager.getWeatherData(CITIES[0]).subscribeOn(Schedulers.io())<br>.observeOn(AndroidSchedulers.mainThread())<br>.subscribe(new Action1<weatherdata>() {<br>@Override<br>public void call(WeatherData weatherData) {<br>Log.d(LOG_TAG, weatherData.toString());<br>((TextView) findViewById(R.id.text)).setText(weatherData.toString());<br>}<br>}, new Action1<throwable>() {<br>@Override<br>public void call(Throwable throwable) {<br>Log.e(LOG_TAG, throwable.getMessage(), throwable);<br>}<br>});</throwable></weatherdata></li>
+<li>Utils——Android各种小功能集合</li>
+<li>RollViewPager——自动轮播使用方便的ViewPager</li>
+<li>EasyRecyclerView——支持下拉上拉刷新等功能全面的RecyclerView</li>
+<li>SwipeBackHelper——Activity滑动关闭支持库，能达到微信效果</li>
 </ul>
-<p>/**</p>
+<p>尝试了很多，这几个是现在常用的。</p>
 <ul>
-<li>Android View 事件处理<br>*/<br>ViewObservable.clicks(findViewById(R.id.text), false).subscribe(new Action1<onclickevent>() {<br>@Override<br>public void call(OnClickEvent onClickEvent) {</onclickevent></li>
+<li>融云——即时通讯</li>
+<li>友盟——数据统计,推送，意见反馈，自动更新，第三方分享及登录,社区</li>
+<li>七牛——云存储</li>
+<li>Mob——短信验证</li>
+<li>Bmob——做后台不求人</li>
 </ul>
-<p>}<br>});</p>
-<p>subscribeOn(Schedulers.io())与observeOn(AndroidSchedulers.mainThread())分别定义了这两个动作的线程。Android UI 更新需要在主线程。<br>4、retrofit 支持 rxjava 整合</p>
-<p>/**</p>
+<p>依赖这一大堆库和SDK以后。建议在合适的时机初始化他们，而不是全堆在<code>Application</code>的<code>onCreate()</code>里面。这样会导致启动时间过长。启动后也会较卡。虽然是不会影响功能正常使用。</p>
+<p><strong>4.配置Gradle</strong><br>某些SDK运行时需要检查签名是否正确。所以在debug模式时也必须用正式KEY签名。而把签名放进版本控制不是明智的做法。所以推荐下面的做法：<br>在app的gradle加入下面代码</p>
+<pre><code>Properties props = new Properties()
+props.load(new FileInputStream(file(&quot;signing.properties&quot;)))
+android {
+signingConfigs {
+    release{
+        keyAlias props[&apos;KEY_ALIAS&apos;]
+        keyPassword props[&apos;KEY_PASSWORD&apos;]
+        storeFile file(props[&apos;KEYSTORE_FILE&apos;])
+        storePassword props[&apos;KEYSTORE_PASSWORD&apos;]
+    }
+}
+buildTypes {
+    release {
+        signingConfig signingConfigs.release
+    }
+    debug {
+        signingConfig signingConfigs.release
+    }
+}
+}
+</code></pre><p>在app的gradle文件同级目录新建signing.properties文件，里面填入你的key的相应信息</p>
+<pre><code>KEYSTORE_FILE = C:\\Users\\Mr.Jude\\Documents\\Android\\HelloWorld.jks
+KEYSTORE_PASSWORD = xxxxxx
+KEY_ALIAS = xxxxxx
+KEY_PASSWORD = xxxxxx
+</code></pre><p>将signing.properties添加进忽略目录。<br>其他人pull下来代码后。自己新建signing.properties填入相应信息后即可编译成功。</p>
+<p><strong>5.制定开发规范</strong><br>为了避免合作开发写的代码风格迥异。或做出了多套开发模式。下面是个例子。毕竟是为了高效开发而制定的。适合自己项目的才是最好。</p>
 <ul>
-<li>服务接口<br>*/<br>private interface ApiManagerService {<br>@GET(“/weather”)<br>WeatherData getWeather(@Query(“q”) String place, @Query(“units”) String units);</li>
+<li>所有Activity继承BaseActivity</li>
+<li>所有Fragment继承BaseFragment</li>
+<li>所有Presenter继承BasePresenter<br>这样利于生命周期管理。也可以方便的全局修改。</li>
 </ul>
-<p>/**</p>
-<ul>
-<li>retrofit 支持 rxjava 整合</li>
-<li>这种方法适用于新接口<br>*/<br>@GET(“/weather”)<br>Observable<weatherdata> getWeatherData(@Query(“q”) String place, @Query(“units”) String units);<br>}<br>Demo 代码: <a href="https://github.com/foolingdutchman/EverExample" target="_blank" rel="external">https://github.com/foolingdutchman/EverExample</a></weatherdata></li>
-</ul>
+<p><strong>命名</strong>，例<br>AccountFragment<br>UserDetailActivity</p>
+<p><strong>layout命名</strong>，例<br>activity_collection<br>fragment_account<br>item_person<br>include_toolbar<br>view_progress<br>不过对于庞大项目的开发。近百个activity开头的layout列表还是会眼瞎。所以那种情况会在前面加上模块名。</p>
+<p><strong>id命名</strong>，例<br>btn_send<br>tv_name<br>list_persons<br>et_password<br>然后用butterknife的插件生成变量会自动将下划线变成驼峰命名</p>
+<p><strong>变量命名</strong>:以m开头。例mAdapter使用时按一个m全都出来了<br><strong>方法命名</strong>:与其写好名字不如写好注释。</p>
+<p>TextView使用官方标准字体<br><img src="http://upload-images.jianshu.io/upload_images/680540-b1d797b5545bbfe2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="TextView.png"></p>
+<pre><code>style=&quot;@style/TextAppearance.AppCompat.Display4&quot;
+style=&quot;@style/TextAppearance.AppCompat.Display3&quot;
+style=&quot;@style/TextAppearance.AppCompat.Display2&quot;
+style=&quot;@style/TextAppearance.AppCompat.Display1&quot;
+style=&quot;@style/TextAppearance.AppCompat.Headline&quot;
+style=&quot;@style/TextAppearance.AppCompat.Title&quot;
+style=&quot;@style/TextAppearance.AppCompat.Subhead&quot;
+style=&quot;@style/TextAppearance.AppCompat.Body2&quot;
+style=&quot;@style/TextAppearance.AppCompat.Body1&quot;
+style=&quot;@style/TextAppearance.AppCompat.Caption&quot;
+style=&quot;@style/TextAppearance.AppCompat.Button&quot;
+</code></pre><p> Button使用Material Design标准样式<br><img src="http://upload-images.jianshu.io/upload_images/680540-e9681cea2ffba812.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Button.png"></p>
+<pre><code>style=&quot;@style/Widget.AppCompat.Button&quot;
+style=&quot;@style/Widget.AppCompat.Button.Borderless&quot;
+style=&quot;@style/Widget.AppCompat.Button.Borderless.Colored&quot;
+style=&quot;@style/Widget.AppCompat.Button.Small&quot;
+</code></pre><p>定好网络请求写法。文件存储方式与位置。写好项目所使用的类库框架用法。</p>
+<p>原文链接：<a href="http://www.jianshu.com/p/d9e4ddd1c530" target="_blank" rel="external">http://www.jianshu.com/p/d9e4ddd1c530</a></p>
 
       
     </div>
@@ -411,9 +515,11 @@ RxJava 是一个响应式编程框架，采用观察者设计模式。所以自�
       
         <div class="post-tags">
           
-            <a href="/tags/RXjava/" rel="tag">#RXjava</a>
+            <a href="/tags/MVP/" rel="tag">#MVP</a>
           
-            <a href="/tags/响应式/" rel="tag">#响应式</a>
+            <a href="/tags/开发模式/" rel="tag">#开发模式</a>
+          
+            <a href="/tags/Android项目/" rel="tag">#Android项目</a>
           
         </div>
       
@@ -422,17 +528,13 @@ RxJava 是一个响应式编程框架，采用观察者设计模式。所以自�
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/08/07/Retrofit2-0/" rel="next" title="Retrofit2.0">
-                <i class="fa fa-chevron-left"></i> Retrofit2.0
+              <a href="/2016/08/13/Android-6-0-动态权限管理的解决方案/" rel="next" title="Android 6.0 - 动态权限管理的解决方案">
+                <i class="fa fa-chevron-left"></i> Android 6.0 - 动态权限管理的解决方案
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/07/Dagger2依赖注入/" rel="prev" title="Dagger2依赖注入">
-                Dagger2依赖注入 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -458,8 +560,8 @@ RxJava 是一个响应式编程框架，采用观察者设计模式。所以自�
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/08/07/RXjava简单使用/"
-           data-title="RXjava简单使用" data-url="http://yoursite.com/2016/08/07/RXjava简单使用/">
+      <div class="ds-thread" data-thread-key="2016/08/14/新建一个优秀的Andoroid-mvp项目/"
+           data-title="新建一个优秀的Android mvp项目" data-url="http://yoursite.com/2016/08/14/新建一个优秀的Andoroid-mvp项目/">
       </div>
     
   </div>
