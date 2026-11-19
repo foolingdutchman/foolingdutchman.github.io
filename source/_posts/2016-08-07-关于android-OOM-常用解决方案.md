@@ -1,5 +1,4 @@
----
-title: ""
+title: "关于android-OOM-常用解决方案"
 date: 2016-08-07
 categories:
   - 内存管理

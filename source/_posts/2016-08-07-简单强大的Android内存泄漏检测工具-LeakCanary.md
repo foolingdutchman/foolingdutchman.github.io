@@ -1,5 +1,4 @@
----
-title: ""
+title: "简单强大的Android内存泄漏检测工具-LeakCanary"
 date: 2016-08-07
 categories:
   - 内存管理

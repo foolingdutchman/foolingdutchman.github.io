@@ -1,5 +1,4 @@
----
-title: ""
+title: "新建一个优秀的Andoroid-mvp项目"
 date: 2016-08-14
 categories:
   - 架构

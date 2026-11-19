@@ -1,5 +1,4 @@
----
-title: ""
+title: "MAC-OSX-10-10上搭建Apache，PHP，MySQL5-6-22，phpMyAdmin开发环境"
 date: 2016-10-01
 categories:
   - 服务器
