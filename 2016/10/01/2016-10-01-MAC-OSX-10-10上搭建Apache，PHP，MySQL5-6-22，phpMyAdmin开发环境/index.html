@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" integrity="sha256-4Lad8m4ZWW1Lgb9+sMVLYEfnIh7BjV1NQMEe79Pviks=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"foolingdutchman.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.29.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="apache的配置apache已经自带了，只需如下三个命令就可以了。开启apache服务 sudo apachectl start停止apache服务 sudo apachectl stop重启服务 sudo apachectl restart查看版本 httpd -v 手动打开apache服务后，在浏览器输入localhost，将看到如下： 程序的根目录在&#x2F;Library&#x2F;W">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小何同学的博客">
+<meta property="og:url" content="https://foolingdutchman.github.io/2016/10/01/2016-10-01-MAC-OSX-10-10%E4%B8%8A%E6%90%AD%E5%BB%BAApache%EF%BC%8CPHP%EF%BC%8CMySQL5-6-22%EF%BC%8CphpMyAdmin%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/index.html">
+<meta property="og:site_name" content="小何同学的博客">
+<meta property="og:description" content="apache的配置apache已经自带了，只需如下三个命令就可以了。开启apache服务 sudo apachectl start停止apache服务 sudo apachectl stop重启服务 sudo apachectl restart查看版本 httpd -v 手动打开apache服务后，在浏览器输入localhost，将看到如下： 程序的根目录在&#x2F;Library&#x2F;W">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-09-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-19T01:59:01.125Z">
+<meta property="article:author" content="foolingdutchman">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://foolingdutchman.github.io/2016/10/01/2016-10-01-MAC-OSX-10-10%E4%B8%8A%E6%90%AD%E5%BB%BAApache%EF%BC%8CPHP%EF%BC%8CMySQL5-6-22%EF%BC%8CphpMyAdmin%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://foolingdutchman.github.io/2016/10/01/2016-10-01-MAC-OSX-10-10%E4%B8%8A%E6%90%AD%E5%BB%BAApache%EF%BC%8CPHP%EF%BC%8CMySQL5-6-22%EF%BC%8CphpMyAdmin%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/index.html","path":"2016/10/01/2016-10-01-MAC-OSX-10-10上搭建Apache，PHP，MySQL5-6-22，phpMyAdmin开发环境/index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title> | 小何同学的博客</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-search popup-trigger" aria-label="搜索" role="button">
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">小何同学的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-toggle" aria-label="切换导航栏" role="button">
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">foolingdutchman</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://foolingdutchman.github.io/2016/10/01/2016-10-01-MAC-OSX-10-10%E4%B8%8A%E6%90%AD%E5%BB%BAApache%EF%BC%8CPHP%EF%BC%8CMySQL5-6-22%EF%BC%8CphpMyAdmin%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/index.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="foolingdutchman">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小何同学的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 小何同学的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-10-01 00:00:00" itemprop="dateCreated datePublished" datetime="2016-10-01T00:00:00+08:00">2016-10-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-11-19 09:59:01" itemprop="dateModified" datetime="2026-11-19T09:59:01+08:00">2026-11-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">服务器</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><strong>apache的配置</strong><br>apache已经自带了，只需如下三个命令就可以了。<br>开启apache服务 sudo apachectl start<br>停止apache服务 sudo apachectl stop<br>重启服务 sudo apachectl restart<br>查看版本 httpd -v</p>
+<p>手动打开apache服务后，在浏览器输入localhost，将看到如下：</p>
+<p>程序的根目录在&#x2F;Library&#x2F;WebServer&#x2F;Documents&#x2F; 下，这个It works 就是里面的info.php打印出来的。下面介绍如何将apache的这个默认目录更改到用户目录下。 </p>
+<ul>
+<li><p>1.在自己的用户目录下新建一个Sites文件夹，我的用户目录为linuxidc</p>
+</li>
+<li><p>2.进到cd &#x2F;etc&#x2F;apache2&#x2F;users&#x2F;目录下，sudo vim username.conf，内容为：</p>
+</li>
+</ul>
+<p><code>&amp;lt;Directory &amp;quot;/Users/linuxidc/Sites/&amp;quot;&amp;gt;</code><br><code>AllowOverride All</code><br><code>Options Indexes MultiViews FollowSymLinks</code><br><code>Require all granted</code><br><code>&amp;lt;/Directory&amp;gt;</code><br>         上面第一行里的linuxidc就是用户目录。然后将该文件权限改为644：<br>sudo chmod 644 username.conf  </p>
+<ul>
+<li>3.进到&#x2F;etc&#x2F;apache2&#x2F;目录，sudo vim httpd.conf 将下面三句话的注释去掉：<br><code>LoadModule authz_core_module libexec/apache2/mod_authz_core.so</code><br><code>LoadModule authz_host_module libexec/apache2/mod_authz_host.so</code><br><code>LoadModule userdir_module libexec/apache2/mod_userdir.so</code></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">`前两句应该已经不带注释了，把第三句注释放开。 </span><br><span class="line">`</span><br><span class="line">``` 然后找到`Include /private/etc/apache2/extra/httpd-userdir.conf`注释放开。 </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><code>PS：在vim下只要切换到命令模式，然后输入</code>&#x2F;”words you need find”<code>就能快速找到需要查找的词。 </code></p>
+<pre><code>
+- 4.进到`/etc/apache2/extra/`目录，将`Include /private/etc/apache2/users/*.conf` 这句话放开注释。
+
+然后终端输入：`sudo apachectl restart` 重启apache，浏览器输入： `loacal/~linuxidc/` 就能看到效果了。（linuxidc是我的用户目录的名字,后面不用再加/Sites）  经过以上步骤apache就搞好了。
+
+**PHP配置**
+
+   PHP的配置非常简单，就一个事，进到/etc/apache2/目录，编辑httpd.conf，找到LoadModule php5_module libexec/apache2/libphp5.so将其放开注释就行了。然后sudo apachectl restart 重启，在用户目录的Sites文件夹下，新建一个index.php,里面echo phpinfo() ，就可以看到效果了：
+
+这里写图片描述
+
+**安装MySQL5.6.22**
+
+这个版本是最新的MySQL，安装方法跟5.5的略有不同。在官网下载mysql-5.6.22-osx10.9-x86_64.dmg，下面是安装方法：
+
+- 1，双击安装的时候，不要勾选StartUp Item这一项：
+这里写图片描述
+如此安装完毕后，在设置－－－MySQL手动开启MySQL服务。
+这里写图片描述
+我这里已经打开了MySQL服务。下面要将其设置为开机自动启动。
+
+- 2，默认状态下，我们用mysql的命令每次都要输入全路径，如`sudo /usr/local/mysql/support-files/mysql.server start`开启mysql服务，`/usr/local/mysql/bin/mysql -v`查看mysql版本，得先把bin目录配到环境变量里。切换到用户根目录 ，vim .bash_profile,输入：
+`export PATH=”/usr/local/mysql/bin:$PATH”`
+保存后，source .bash_profile使环境变量生效。接着就可以直接在终端里输入mysql命令了。
+最后，通过`mysqladmin -u root password ‘yourpasswordhere’`给mysql的root用户设置密码。单引号里的内容就是要设的密码。
+
+- 3，修复socket error的问题。有一个负责mysql 服务器 客户端通讯的socket文件，mysql的这个版本将其放在/tmp目录，但是OSX却默认的找 /var/mysql 这个目录，所以要建个软链接。新建目录 /var/mysql， 然后sudo ln -s /tmp/mysql.sock /var/mysql/mysql.sock 就ok了。
+
+- 4，让mysql开机自动启动。
+sudo vim sudo nano /Library/LaunchDaemons/com.mysql.mysql.plist,里面内容输入：
+`KeepAlive`
+`Label`
+`com.mysql.mysqld`
+`ProgramArguments`
+`/usr/local/mysql/bin/mysqld_safe`
+`–user=mysql`
+
+保存后，修改权限：
+`sudo chown root:wheel /Library/LaunchDaemons/com.mysql.mysql.plist`
+`sudo chmod 644 /Library/LaunchDaemons/com.mysql.mysql.plist`
+`sudo launchctl load -w /Library/LaunchDaemons/com.mysql.mysql.plist`
+这样mysql就ok了！
+
+**phpMyAdmin的安装**
+
+从[http://www.phpmyadmin.net/home_page/downloads.php](http://www.phpmyadmin.net/home_page/downloads.php) 下载，我下的是phpMyAdmin-4.4.2-all-languages.zip这个版本，将其解压。然后最外层文件夹名字修改为phpmyadmin，进到~/Sites/phpmyadmin这个目录，新建文件夹：mkdir config 修改读写权限：chmod o+w config
+然后浏览器输入：[http://localhost/~linuxidc/phpmyadmin/setup/](http://localhost/~linuxidc/phpmyadmin/setup/) (注意 中间的linuxidc 换成自己的用户名称)
+
+这里写图片描述
+点击 “新建服务器“，我上面已经新建好了，然后在这个界面：
+
+这里写图片描述
+密码处输入mysql的root用户密码。然后点击“应用“，这样config文件夹下就生成了config.inc.php，将该文件拷贝到phpmyadmin的根目录下。然后删除整个config文件夹。输入[http://localhost/~linuxidc/phpmyadmin/](http://localhost/~linuxidc/phpmyadmin/) 就可以看到登陆phpmyadmin的界面了。 如此，phpMyAdmin搞定。
+
+**读写权限和分组问题**
+
+最后遗留一个读写权限和归属问题，如果本地开发测试的话，这个步骤可以忽略。如果想让自己的mac切实作为一台服务器，那么这个还要设置下的。这个步骤等同于在布阿里云代码的时候，让public_html文件夹的所有东西可写，且归属于www一个意思。假设Sites文件夹下有个自己的项目：`testsite`
+`sudo chmod -R a+w ~/Sites/testsite`设置所有人都可以读写
+
+`sudo chown -R _www ~/Sites/testsite`设置testsite文件夹只归属`_www`组。
+
+OK，PHP在MAC上的搭建到此结束。
+
+**LAMP架构协同应用的实例——phpMyAdmin **
+[http://www.linuxidc.com/Linux/2013-07/87645.htm](http://www.linuxidc.com/Linux/2013-07/87645.htm)
+
+**LAMP应用之phpMyAdmin、Wordpress**
+ [http://www.linuxidc.com/Linux/2013-04/82757.htm](http://www.linuxidc.com/Linux/2013-04/82757.htm)
+
+**phpMyAdmin老出现登陆超时解决方法 **
+[http://www.linuxidc.com/Linux/2012-09/70715.htm](http://www.linuxidc.com/Linux/2012-09/70715.htm)
+
+**Ubuntu 安装phpMyAdmin与Adminer **
+[http://www.linuxidc.com/Linux/2012-08/69419.htm](http://www.linuxidc.com/Linux/2012-08/69419.htm)
+
+**在LAMP基础上实现SSL功能并安装phpMyAdmin **
+[http://www.linuxidc.com/Linux/2012-07/66905.htm](http://www.linuxidc.com/Linux/2012-07/66905.htm)
+
+**Ubuntu 14.04 配置 LAMP+phpMyAdmin PHP(5.5.9)开发环境 **
+[http://www.linuxidc.com/Linux/2014-10/107924.htm](http://www.linuxidc.com/Linux/2014-10/107924.htm)
+
+**phpMyAdmin 的详细介绍：**请点这里
+**phpMyAdmin 的下载地址：**请点这里
+
+本文永久更新链接地址：[http://www.linuxidc.com/Linux/2015-04/116347.htm](http://www.linuxidc.com/Linux/2015-04/116347.htm)
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/08/14/2016-08-14-%E6%96%B0%E5%BB%BA%E4%B8%80%E4%B8%AA%E4%BC%98%E7%A7%80%E7%9A%84Andoroid-mvp%E9%A1%B9%E7%9B%AE/index.html" rel="prev" title="">
+                  <i class="fa fa-angle-left"></i> 
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/11/19/hello-world/index.html" rel="next" title="Hello World">
+                  Hello World <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">foolingdutchman</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

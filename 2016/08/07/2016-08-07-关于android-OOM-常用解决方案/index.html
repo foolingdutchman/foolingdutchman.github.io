@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.2">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" integrity="sha256-4Lad8m4ZWW1Lgb9+sMVLYEfnIh7BjV1NQMEe79Pviks=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"foolingdutchman.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.29.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="在Android平台上面，应用程序OOM异常永远都是值得关注的问题。通常这一块也是程序这中的重点之一。这下我就如何解决OOM作一点简单的介绍。      首先，OOM就是内存溢出，即Out Of Memory。也就是说内存占有量超过了VM所分配的最大。     怎么解决OOM，通常OOM都发生在需要用到大量内存的情况下（创建或解析Bitmap，分配特大的数组等），在这样的一种情况下，就可能出现OO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小何同学的博客">
+<meta property="og:url" content="https://foolingdutchman.github.io/2016/08/07/2016-08-07-%E5%85%B3%E4%BA%8Eandroid-OOM-%E5%B8%B8%E7%94%A8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/index.html">
+<meta property="og:site_name" content="小何同学的博客">
+<meta property="og:description" content="在Android平台上面，应用程序OOM异常永远都是值得关注的问题。通常这一块也是程序这中的重点之一。这下我就如何解决OOM作一点简单的介绍。      首先，OOM就是内存溢出，即Out Of Memory。也就是说内存占有量超过了VM所分配的最大。     怎么解决OOM，通常OOM都发生在需要用到大量内存的情况下（创建或解析Bitmap，分配特大的数组等），在这样的一种情况下，就可能出现OO">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-08-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-19T01:59:01.124Z">
+<meta property="article:author" content="foolingdutchman">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://foolingdutchman.github.io/2016/08/07/2016-08-07-%E5%85%B3%E4%BA%8Eandroid-OOM-%E5%B8%B8%E7%94%A8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://foolingdutchman.github.io/2016/08/07/2016-08-07-%E5%85%B3%E4%BA%8Eandroid-OOM-%E5%B8%B8%E7%94%A8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/index.html","path":"2016/08/07/2016-08-07-关于android-OOM-常用解决方案/index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title> | 小何同学的博客</title>
+  
+
+
+
+
+
+
+
+
+  
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-search popup-trigger" aria-label="搜索" role="button">
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">小何同学的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-toggle" aria-label="切换导航栏" role="button">
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">foolingdutchman</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://foolingdutchman.github.io/2016/08/07/2016-08-07-%E5%85%B3%E4%BA%8Eandroid-OOM-%E5%B8%B8%E7%94%A8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/index.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="foolingdutchman">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小何同学的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 小何同学的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-08-07 00:00:00" itemprop="dateCreated datePublished" datetime="2016-08-07T00:00:00+08:00">2016-08-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-11-19 09:59:01" itemprop="dateModified" datetime="2026-11-19T09:59:01+08:00">2026-11-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">内存管理</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>在Android平台上面，应用程序OOM异常永远都是值得关注的问题。通常这一块也是程序这中的重点之一。这下我就如何解决OOM作一点简单的介绍。<br>      首先，OOM就是内存溢出，即Out Of Memory。也就是说内存占有量超过了VM所分配的最大。<br>     怎么解决OOM，通常OOM都发生在需要用到大量内存的情况下（创建或解析Bitmap，分配特大的数组等），在这样的一种情况下，就可能出现OOM，据我现在了解到，多数OOM都是因为Bitmap太大。所以，这里我就专门针对如何解决Bitmap的OOM。其实最核发的就是只加载可见范围内的Bitmap，试想这样一种情况，在GridView或ListView中，数据量有5000，每一屏只显示20个元素，那么不可见的，我们是不需要保存Bitmap在内在中的。所以我们就是只把那么可见的Bitmap保留在内存中，那些不可见的，就释放掉。当元素滑出来时，再去加载Bitmap。<br>         这里我有两种方式，都可以避免OOM。</p>
+<p>一，主动释放Bitmap的内存<br>这种方式我简单说一下，不太推荐，这也是我最开始使用的一种方法，但最后证明它不是最好的。（不推荐）</p>
+<p>  它的本质思路是：<br>  1、只加载可见区域的Bitmap</p>
+<p>  2、滑动时不加载</p>
+<p>  3、停止滑动（Idle）后，开始重新加载可见区域的图片</p>
+<p>  4、释放滑出可见区域的Bitmap的内在。</p>
+<p>  它比较复杂：<br>    1、我们需要监听GridView&#x2F;ListView的滑动事件，这个很简单做到，AbsListView#setOnScrollListener(OnScrollListener l)<br>      2、主动调用Bitmap#recycle()方法，它会导致一个问题，必须判断这个Bitmap是否被一个View(ImageView等）所引用，如果被引用，我们不能简单地调用recycle()方法，这样会导致异常，说是View使用了一个已经被回收的Bitmap。<br>      3，我们必须设计自己的线程来控制开始&#x2F;暂停等，因为GridView&#x2F;ListView的滑动状态可能不断地变化，也就是说滑动-&gt;停止-&gt;滑动，这种状态可能不断变化，这样就会导致我们的线程中的run()方法里面的逻辑比较复杂，一旦复杂，问题就可能就得更多。<br>       基于以上几点，这种方式不是最好的，所以不推荐。</p>
+<p>二，设计Cache<br>    这种方式，我觉得是比较好的一种，它首先利用了cache，我认为cache是一个很重要的东西，把Bitmap的内存单独放在一个地方来管理，这个地方就是cache，它的容量是一定的，我们可能会不断的向这个cache中添加元素，也可能不断的移除元素。</p>
+<p>为了更好的说明这种方式，先要介绍一下LruCache。</p>
+<p>  LruCache<br>    1、这其实就是一个LinkedHashMap，任意时刻，当一个值被访问时，它就会被移动到队列的开始位置，所以这也是为什么要用LinkedHashMap的原因，因为要频繁的做移动操作，为了提高性能，所以要用LinkedHashMap。当cache满了时，此时再向cache里面添加一个值，那么，在队列最后的值就会从队列里面移除，这个值就有可能被GC回收掉。<br>     2、如果我们想主动释放内存，也是可以的，我们可以重写entryRemoved(Boolean, K, V, V)方法。<br>      3、这个类是线程安全的，在多线程下面使用这个类，没不会存在问题。<br><em>[java] view plain copy 在CODE上查看代码片派生到我的代码片</em></p>
+<pre><code>`synchronized (cache) {  
+if (cache.get(key) == null) {  
+    cache.put(key, value);  
+ }}  
+`
+```4、LruCache的APILevel是12，也就是说，我们在SDK 2.3.x以下是无法使用的，但是没关系，LruCache的源码不算复杂，我们可以直接把它拷贝到自己的工程目录就可以了。
+   **  AsyncTask&amp;lt;&amp;gt; **
+    这个类也是一个很重要也很常用的类。它封装了Thread和Handler，我们使用就更加方便，不用关注Handler，我们知道，在后台线程中是不能更新UI，而很多情况下，我们在后台线程做完一件事情后，一般都会更新UI，一般的做法是向关联到UI线程的Handler发送一个message，在Handler里面去处理这个message，从而更新UI。用了AsyncTask之后，我们就不用关注Handler了。这个类有几个重要的方法：
+
+- 1、onPreExecute(): 在UI线程里面调用，它在这个task执行后会立即调用。我们在这个方法里面通常是用于建立一个任务，比如显示一个等待对话框来通知用户。
+
+- 2、doInBackground(Params…)：这个方法从名字就可以看出，它是运行在后台线程的，在这个方法里面，去做耗时的事情，比如下载访问网络，操作文件等。这这个方法里面，我们可以调用publishProgress(Progress…)来调用当前任务的进度，调用了这个方法后，对应的onProgressUpdate(Progress…)方法会被调用，这个方法是运行在UI线程的。
+
+- 3、onProgressUpdate(Progress…)：运行在UI线程，在调用publishProgress()方法之后。这个方法用来在UI上显示任何形式的进度，比如你可以显示一个等待对话框，也可以显示一个文本形式的loga，还可以显示toast对话框。
+
+- 4、onPostExecute(Result)：当task结束后调用，它运行在UI线程。
+
+- 5、取消一个task，我们可以在任何时候调用cancel(Boolean)来取消一个任务，当调用了cancel()方法后，onCancelled(Object)方法就会被调用，onPostExecute(Object)方法不会被调用，在doInBackground(Object[])方法中，我们可以用isCancelled()方法来检查任务是否取消。
+
+- 6、几点规则
+AsyncTask实例必须在UI线程中创建
+execute(Params…)方法必须在UI线程中调用。
+不用手动调用onPreExecute(), onPostExecute(), doInBackground(), onProgressUpdate()方法。
+一个任务只能被执行一次。
+**总的思路**a
+1、始终从cache中去取Bitmap，如果取到Bitmap，就直接把这个Bitmap设置到ImageView上面。
+2、如果缓存中不存在，那么启动一个task去加载（可能从文件来，也可能从网络）。
+3、每一个ImageView上面都可能绑定一个task，所以，这个ImageView必须提供一个方法能得到与之相关联的task，为什么要这样做？因为在给一个ImageView绑定task之前，必须要把原先的task取消。
+4、思路很简单，但细节很多，用文字来一一说明也不太现实。我上传一个demo，大家可以参考代码和文章来理解。
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/08/07/2016-08-07-%E7%AE%80%E5%8D%95%E5%BC%BA%E5%A4%A7%E7%9A%84Android%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E6%A3%80%E6%B5%8B%E5%B7%A5%E5%85%B7-LeakCanary/index.html" rel="prev" title="">
+                  <i class="fa fa-angle-left"></i> 
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/08/07/2016-08-07-setup-your-blog/index.html" rel="next" title="">
+                   <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">foolingdutchman</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
